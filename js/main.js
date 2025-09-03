@@ -3,20 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileNav = document.querySelector('.mobile-nav-links');
     const internalLinks = document.querySelectorAll('a[href^="#"]');
     const scrollIndicator = document.querySelector('.scroll-down-indicator');
-    const faqQuestions = document.querySelectorAll('.faq-question');
+    const faqItems = document.querySelectorAll('.faq-item');
 
-    // Scroll to top on page refresh
-    window.addEventListener('beforeunload', () => {
+    // Riporta la pagina all'inizio al refresh
+    window.onbeforeunload = function () {
         window.scrollTo(0, 0);
-    });
-    if (history.scrollRestoration) {
-        history.scrollRestoration = 'manual';
-    } else {
-        window.onbeforeunload = function () {
-            window.scrollTo(0, 0);
-        }
-    }
-
+    };
 
     // Toggle del menu mobile
     menuBtn.addEventListener('click', function() {
@@ -30,36 +22,24 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const targetId = this.getAttribute('href');
 
-            // Per il link #home, scorre in cima alla pagina
             if (targetId === '#home') {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-                // Chiude il menu mobile se è aperto
-                if (mobileNav.classList.contains('active')) {
-                    menuBtn.classList.remove('active');
-                    mobileNav.classList.remove('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
-                return;
             }
 
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
-                // Chiude il menu mobile se è aperto
-                if (mobileNav.classList.contains('active')) {
-                    menuBtn.classList.remove('active');
-                    mobileNav.classList.remove('active');
-                }
-
-                // Scorrimento dolce
-                targetElement.scrollIntoView({ behavior: 'smooth' });
+            // Chiude il menu mobile se è aperto dopo il click
+            if (mobileNav.classList.contains('active')) {
+                menuBtn.classList.remove('active');
+                mobileNav.classList.remove('active');
             }
         });
     });
 
-    // Intersection Observer per l'effetto fade-in
+    // Intersection Observer per l'effetto fade-in delle sezioni
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -75,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(section);
     });
 
-    // Hide scroll-down indicator on scroll
+    // Logica per nascondere l'indicatore di scorrimento
     window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
             scrollIndicator.classList.add('hidden');
@@ -84,23 +64,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // FAQ Accordion
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-            const answer = question.nextElementSibling;
-            const isActive = question.classList.contains('active');
-
-            // Chiudi tutte le altre risposte
-            faqQuestions.forEach(q => {
-                q.classList.remove('active');
-                q.nextElementSibling.style.maxHeight = null;
+    // Logica per l'accordion delle FAQ
+    faqItems.forEach(item => {
+        const header = item.querySelector('h4');
+        header.addEventListener('click', () => {
+            // Chiudi tutti gli altri item aperti
+            faqItems.forEach(openItem => {
+                if(openItem !== item && openItem.classList.contains('active')) {
+                    openItem.classList.remove('active');
+                }
             });
-
-            // Apri o chiudi la risposta cliccata
-            if (!isActive) {
-                question.classList.add('active');
-                answer.style.maxHeight = answer.scrollHeight + 'px';
-            }
+            // Apri/chiudi l'item cliccato
+            item.classList.toggle('active');
         });
     });
 });
