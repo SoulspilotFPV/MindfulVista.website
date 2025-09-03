@@ -300,66 +300,54 @@ strong {
     margin-bottom: 20px;
 }
 
-/* --- SEZIONE APP PREVIEW SLIDER --- */
-@keyframes app-scroll {
+/* --- SEZIONE APP SLIDER --- */
+@keyframes scroll-app {
     from { transform: translateX(0); }
     to { transform: translateX(calc(-280px * 4)); }
 }
-
 .app-slider {
-    height: 500px;
-    margin: auto;
     overflow: hidden;
     position: relative;
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-
-.app-slider::before, .app-slider::after { display: none; }
-
 .app-slide-track {
-    animation: app-scroll 20s linear infinite;
+    animation: scroll-app 25s linear infinite;
     display: flex;
     width: calc(280px * 8);
     backface-visibility: hidden;
     will-change: transform;
 }
-
 .app-slider:hover .app-slide-track {
     animation-play-state: paused;
 }
-
 .app-slide {
-    height: 500px;
     width: 280px;
     padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
-
 .app-slide img {
     width: 100%;
-    height: auto;
-    max-height: 100%;
     border-radius: 20px;
     box-shadow: var(--shadow-lg);
     transition: transform 0.3s ease;
 }
-
 .app-slide img:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
+}
+.app-slide-titles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    margin-top: 30px;
+    gap: 15px;
+}
+.app-slide-titles h4 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
-.app-preview-titles {
-    display: flex;
-    justify-content: space-around;
-    max-width: 1100px;
-    margin: 20px auto 0;
-    padding: 0 20px;
-    font-weight: 600;
-    color: var(--text-light);
-    text-align: center;
-}
 
 /* --- SEZIONE TESTIMONIANZE CON SLIDER --- */
 .testimonial-card-slider {
@@ -448,25 +436,27 @@ strong {
 .partners-logos {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Allinea in alto per coerenza */
     gap: 50px;
     flex-wrap: wrap;
 }
 .partner-item {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column; /* Imposta la direzione in colonna */
+    align-items: center;   /* Centra orizzontalmente */
     text-align: center;
     color: var(--text-light);
+    width: 150px; /* Larghezza fissa per coerenza */
 }
 .partner-item i {
     font-size: 3rem;
-    margin-bottom: 10px;
+    margin-bottom: 15px; /* Aumentato spazio */
     color: var(--primary);
 }
 .partner-item span {
     font-weight: 600;
     font-size: 1.1rem;
+    line-height: 1.3;
 }
 
 /* --- SEZIONE FAQ --- */
@@ -481,36 +471,35 @@ strong {
     box-shadow: var(--shadow);
     overflow: hidden; /* Nasconde il contenuto che esce */
 }
-.faq-item h4 {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    padding: 20px;
-    margin: 0;
-    cursor: pointer;
+.faq-question {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    padding: 20px;
+    cursor: pointer;
+    user-select: none; /* Impedisce la selezione del testo */
 }
-.faq-item h4 i {
+.faq-arrow {
     transition: transform 0.3s ease;
 }
-.faq-item p {
-    line-height: 1.8;
-    padding: 0 20px;
-    max-height: 0;
-    opacity: 0;
-    margin: 0;
-    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
-}
-.faq-item.active p {
-    max-height: 200px; /* Altezza sufficiente per il contenuto */
-    opacity: 1;
-    padding: 0 20px 20px;
-}
-.faq-item.active h4 i {
+.faq-item.active .faq-arrow {
     transform: rotate(180deg);
 }
-
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+}
+.faq-answer p {
+    padding: 0 20px 20px;
+    line-height: 1.8;
+    margin: 0;
+}
+.faq-item.active .faq-answer {
+    max-height: 200px; /* Altezza sufficiente per il contenuto */
+}
 
 /* --- SEZIONE CONTATTI --- */
 .contact-info .contact-email {
@@ -583,19 +572,18 @@ strong {
     margin-left: auto;
     margin-right: auto;
 }
+.footer-logo a.footer-logo-link {
+    text-decoration: none;
+    color: white;
+}
 .footer-logo h3 {
     font-size: 1.8rem;
     margin-bottom: 15px;
-}
-.footer-logo-link {
-    color: white;
-    text-decoration: none;
     transition: color 0.3s ease;
 }
-.footer-logo-link:hover {
+.footer-logo a.footer-logo-link:hover h3 {
     color: var(--primary-light);
 }
-
 .footer-logo p { opacity: 0.7; }
 .footer-links-group h4 {
     font-size: 1.2rem;
@@ -681,14 +669,6 @@ strong {
 .mobile-nav-links .nav-link { font-size: 1.5rem; color: var(--text-primary); }
 
 /* --- Media Queries --- */
-@media (max-width: 992px) {
-    .app-preview-titles {
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-}
-
-
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .mobile-menu { display: block; }
@@ -696,11 +676,11 @@ strong {
     .hero-content .hero-subtitle { font-size: 1.1rem; }
     .section { padding: 60px 0; }
     .section-title { font-size: 1.8rem; }
-    .about-content, .app-mockup-container { grid-template-columns: 1fr; gap: 30px; }
+    .about-content { grid-template-columns: 1fr; gap: 30px; }
+    .app-slide-titles { grid-template-columns: 1fr; }
     .about-image { grid-row: 1; }
     .footer-content, .footer-bottom { text-align: center; }
     .social-icons { justify-content: center; }
-    .app-preview-titles { display: none; }
 }
 
 /* --- Indicatore di Scorrimento Animato --- */
@@ -711,13 +691,12 @@ strong {
     transform: translateX(-50%);
     z-index: 10;
     opacity: 1;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease; /* Transizione morbida per la scomparsa */
 }
 .scroll-down-indicator.hidden {
     opacity: 0;
-    pointer-events: none;
+    pointer-events: none; /* Disabilita interazioni quando nascosto */
 }
-
 .mouse {
     width: 30px;
     height: 50px;
@@ -735,23 +714,11 @@ strong {
     top: 8px;
     left: 50%;
     transform: translateX(-50%);
-    animation: scroll-down 2.2s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    animation: scroll-down 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite; /* Animazione più morbida */
 }
 @keyframes scroll-down {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -5px);
-    }
-    30% {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
-    70% {
-        opacity: 1;
-        transform: translate(-50%, 15px);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, 25px);
-    }
+    0% { opacity: 0; top: 8px; }
+    20% { opacity: 1; top: 8px; }
+    80% { opacity: 1; top: 25px; }
+    100% { opacity: 0; top: 25px; }
 }
