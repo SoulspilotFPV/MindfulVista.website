@@ -308,31 +308,24 @@ strong {
     gap: 50px;
     margin-top: 40px;
 }
-.app-mockup-image img {
+.app-mockup-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.app-mockup-images img {
     width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-    display: block;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
 }
-.app-mockup-features h3 {
-    font-size: 1.6rem;
+.app-mockup-titles h3 {
+    font-size: 1.5rem;
     color: var(--text-primary);
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    padding-left: 15px;
+    border-left: 3px solid var(--primary);
 }
-.app-mockup-features ul {
-    list-style: none;
-    padding: 0;
-}
-.app-mockup-features ul li {
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.app-mockup-features ul li .fa-check-circle {
-    color: var(--primary);
-}
+
 
 /* --- SEZIONE TESTIMONIANZE CON SLIDER --- */
 .testimonial-card-slider {
@@ -422,22 +415,45 @@ strong {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 40px;
     flex-wrap: wrap;
+    margin-top: 40px;
 }
-.partner-item {
-    text-align: center;
-    color: var(--text-light);
+.partner-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 180px;
 }
-.partner-item i {
-    font-size: 3rem;
-    margin-bottom: 10px;
-    color: var(--primary);
+.partner-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
 }
-.partner-item span {
+.partner-card:hover .partner-icon-wrapper {
+    background-color: var(--primary-dark);
+    transform: scale(1.1);
+}
+.partner-icon-wrapper i {
+    font-size: 2.5rem;
+    color: var(--primary-darker);
+    transition: color 0.3s ease;
+}
+.partner-card:hover .partner-icon-wrapper i {
+    color: white;
+}
+.partner-name {
     font-weight: 600;
     font-size: 1.1rem;
+    color: var(--text);
 }
+
 
 /* --- SEZIONE FAQ --- */
 .faq-container {
@@ -445,20 +461,43 @@ strong {
 }
 .faq-item {
     background: var(--card-bg);
-    padding: 20px;
     border-radius: 12px;
     margin-bottom: 15px;
     border: 1px solid var(--primary-light);
     box-shadow: var(--shadow);
+    overflow: hidden; /* Necessario per la transizione */
 }
-.faq-item h4 {
+.faq-question {
     font-size: 1.2rem;
     color: var(--text-primary);
-    margin-bottom: 10px;
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
 }
-.faq-item p {
+.faq-question i {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                padding 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.faq-answer p {
+    padding: 0 20px 20px;
     line-height: 1.8;
+    margin: 0;
 }
+.faq-item.active .faq-answer {
+    max-height: 200px; /* Valore sufficientemente alto */
+}
+
 
 /* --- SEZIONE CONTATTI --- */
 .contact-info .contact-email {
@@ -531,9 +570,13 @@ strong {
     margin-left: auto;
     margin-right: auto;
 }
+.footer-logo a {
+    text-decoration: none;
+}
 .footer-logo h3 {
     font-size: 1.8rem;
     margin-bottom: 15px;
+    color: white;
 }
 .footer-logo p { opacity: 0.7; }
 .footer-links-group h4 {
@@ -631,6 +674,7 @@ strong {
     .about-image { grid-row: 1; }
     .footer-content, .footer-bottom { text-align: center; }
     .social-icons { justify-content: center; }
+    .app-mockup-images { grid-template-columns: 1fr; }
 }
 
 /* --- Indicatore di Scorrimento Animato --- */
@@ -640,6 +684,11 @@ strong {
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.scroll-down-indicator.hidden {
+    opacity: 0;
+    visibility: hidden;
 }
 .mouse {
     width: 30px;
@@ -658,10 +707,20 @@ strong {
     top: 8px;
     left: 50%;
     transform: translateX(-50%);
-    animation: scroll-down 2s infinite;
+    animation: scroll-down 2.2s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
+
 @keyframes scroll-down {
-    0% { opacity: 1; top: 8px; }
-    50% { opacity: 1; top: 25px; }
-    100% { opacity: 0; top: 25px; }
+    0% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, 15px);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 15px);
+    }
 }
