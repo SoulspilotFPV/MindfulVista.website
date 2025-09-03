@@ -300,61 +300,40 @@ strong {
     margin-bottom: 20px;
 }
 
-/* --- SEZIONE APP MOCKUP --- */
-.app-preview-container {
-    overflow-x: auto;
-    padding-bottom: 20px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary-light) var(--background);
+/* --- SEZIONE APP SLIDER --- */
+.app-slider {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    margin-top: 40px;
 }
-
-.app-preview-container::-webkit-scrollbar {
-    height: 8px;
-}
-
-.app-preview-container::-webkit-scrollbar-track {
-    background: var(--background);
-    border-radius: 10px;
-}
-
-.app-preview-container::-webkit-scrollbar-thumb {
-    background-color: var(--primary-light);
-    border-radius: 10px;
-}
-
-.app-mockup-gallery {
+.app-slide-track {
     display: flex;
-    gap: 30px;
-    width: max-content;
-    margin-bottom: 30px;
+    animation: scroll-app 30s linear infinite;
+    width: calc(280px * 8); /* 4 slides + 4 cloni */
 }
-
-.app-mockup-item img {
-    height: 500px;
+.app-slider:hover .app-slide-track {
+    animation-play-state: paused;
+}
+.app-slide {
+    width: 280px;
+    padding: 0 15px;
+    text-align: center;
+}
+.app-slide img {
+    width: 100%;
     border-radius: 20px;
     box-shadow: var(--shadow-lg);
-    transition: transform 0.3s ease;
+    margin-bottom: 15px;
 }
-
-.app-mockup-item img:hover {
-    transform: scale(1.03);
-}
-
-.app-mockup-titles {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    text-align: center;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.app-mockup-titles h4 {
-    font-size: 1.1rem;
+.app-slide h4 {
     color: var(--text-primary);
-    font-weight: 600;
+    font-size: 1.1rem;
 }
-
+@keyframes scroll-app {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-280px * 4)); }
+}
 
 /* --- SEZIONE TESTIMONIANZE CON SLIDER --- */
 .testimonial-card-slider {
@@ -391,27 +370,24 @@ strong {
 }
 
 .slider {
-    height: 280px; /* Aumentato per far spazio alle stelle */
+    height: 280px;
     margin: auto;
     overflow: hidden;
     position: relative;
     width: 100%;
 }
-
 .slider::before, .slider::after { display: none; }
-
 .slide-track {
     animation: scroll 40s linear infinite;
     display: flex;
     width: calc(350px * 14);
-    backface-visibility: hidden; /* Fix per fluidità */
     will-change: transform;
 }
-
-.slider:hover .slide-track { animation-play-state: paused; }
-
+.slider:hover .slide-track {
+    animation-play-state: paused;
+}
 .slide {
-    height: 280px; /* Aumentato per far spazio alle stelle */
+    height: 280px;
     width: 350px;
     padding: 15px;
 }
@@ -443,27 +419,24 @@ strong {
 .partners-logos {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     gap: 50px;
     flex-wrap: wrap;
 }
 .partner-item {
-    text-align: center;
-    color: var(--text-light);
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 150px;
+    color: var(--text-light);
 }
 .partner-item i {
     font-size: 3rem;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     color: var(--primary);
 }
 .partner-item span {
     font-weight: 600;
     font-size: 1.1rem;
-    line-height: 1.4;
 }
 
 /* --- SEZIONE FAQ --- */
@@ -478,32 +451,31 @@ strong {
     box-shadow: var(--shadow);
     overflow: hidden;
 }
-.faq-item-header {
+.faq-question {
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
     cursor: pointer;
 }
-.faq-item-header h4 {
+.faq-question h4 {
     font-size: 1.2rem;
     color: var(--text-primary);
     margin: 0;
 }
-.faq-item-header .faq-arrow {
-    font-size: 1.2rem;
+.faq-question i {
     color: var(--primary-dark);
     transition: transform 0.3s ease;
 }
-.faq-item.active .faq-arrow {
+.faq-item.active .faq-question i {
     transform: rotate(180deg);
 }
-.faq-item-body {
+.faq-answer {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s ease-out;
 }
-.faq-item-body p {
+.faq-answer p {
     padding: 0 20px 20px;
     line-height: 1.8;
     margin: 0;
@@ -580,7 +552,7 @@ strong {
     margin-left: auto;
     margin-right: auto;
 }
-.footer-logo a {
+.footer-logo {
     text-decoration: none;
     color: white;
 }
@@ -673,13 +645,6 @@ strong {
 .mobile-nav-links .nav-link { font-size: 1.5rem; color: var(--text-primary); }
 
 /* --- Media Queries --- */
-@media (max-width: 900px) {
-    .app-mockup-titles {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .mobile-menu { display: block; }
@@ -691,15 +656,7 @@ strong {
     .about-image { grid-row: 1; }
     .footer-content, .footer-bottom { text-align: center; }
     .social-icons { justify-content: center; }
-    .app-mockup-item img { height: 400px; }
 }
-
-@media (max-width: 480px) {
-    .app-mockup-titles {
-        grid-template-columns: 1fr;
-    }
-}
-
 
 /* --- Indicatore di Scorrimento Animato --- */
 .scroll-down-indicator {
@@ -708,20 +665,19 @@ strong {
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
-    opacity: 1;
-    transition: opacity 0.5s ease-out;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
-
 .scroll-down-indicator.hidden {
     opacity: 0;
+    visibility: hidden;
 }
-
 .mouse {
     width: 30px;
     height: 50px;
     border: 2px solid white;
     border-radius: 25px;
     position: relative;
+    opacity: 0.8;
 }
 .scroller {
     width: 4px;
@@ -732,19 +688,10 @@ strong {
     top: 8px;
     left: 50%;
     transform: translateX(-50%);
-    animation: scroll-down 2.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    animation: scroll-down 2s infinite;
 }
 @keyframes scroll-down {
-    0% {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
-    50% {
-        opacity: 1;
-        transform: translate(-50%, 15px);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, 15px);
-    }
+    0% { opacity: 1; top: 8px; }
+    50% { opacity: 1; top: 25px; }
+    100% { opacity: 0; top: 25px; }
 }
