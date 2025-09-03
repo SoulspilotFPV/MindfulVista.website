@@ -301,29 +301,58 @@ strong {
 }
 
 /* --- SEZIONE APP MOCKUP --- */
-.app-mockup-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 50px;
-    margin-top: 40px;
+.app-preview-container {
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-light) var(--background);
 }
-.app-mockup-images {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+
+.app-preview-container::-webkit-scrollbar {
+    height: 8px;
 }
-.app-mockup-images img {
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: var(--shadow-lg);
+
+.app-preview-container::-webkit-scrollbar-track {
+    background: var(--background);
+    border-radius: 10px;
 }
-.app-mockup-titles h3 {
-    font-size: 1.5rem;
-    color: var(--text-primary);
+
+.app-preview-container::-webkit-scrollbar-thumb {
+    background-color: var(--primary-light);
+    border-radius: 10px;
+}
+
+.app-mockup-gallery {
+    display: flex;
+    gap: 30px;
+    width: max-content;
     margin-bottom: 30px;
-    padding-left: 15px;
-    border-left: 3px solid var(--primary);
+}
+
+.app-mockup-item img {
+    height: 500px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s ease;
+}
+
+.app-mockup-item img:hover {
+    transform: scale(1.03);
+}
+
+.app-mockup-titles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.app-mockup-titles h4 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 
@@ -414,46 +443,28 @@ strong {
 .partners-logos {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 40px;
+    align-items: flex-start;
+    gap: 50px;
     flex-wrap: wrap;
-    margin-top: 40px;
 }
-.partner-card {
+.partner-item {
+    text-align: center;
+    color: var(--text-light);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    width: 180px;
+    max-width: 150px;
 }
-.partner-icon-wrapper {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: var(--primary-light);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s ease;
+.partner-item i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--primary);
 }
-.partner-card:hover .partner-icon-wrapper {
-    background-color: var(--primary-dark);
-    transform: scale(1.1);
-}
-.partner-icon-wrapper i {
-    font-size: 2.5rem;
-    color: var(--primary-darker);
-    transition: color 0.3s ease;
-}
-.partner-card:hover .partner-icon-wrapper i {
-    color: white;
-}
-.partner-name {
+.partner-item span {
     font-weight: 600;
     font-size: 1.1rem;
-    color: var(--text);
+    line-height: 1.4;
 }
-
 
 /* --- SEZIONE FAQ --- */
 .faq-container {
@@ -465,39 +476,38 @@ strong {
     margin-bottom: 15px;
     border: 1px solid var(--primary-light);
     box-shadow: var(--shadow);
-    overflow: hidden; /* Necessario per la transizione */
+    overflow: hidden;
 }
-.faq-question {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    padding: 20px;
-    cursor: pointer;
+.faq-item-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px;
+    cursor: pointer;
+}
+.faq-item-header h4 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
     margin: 0;
 }
-.faq-question i {
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.faq-item-header .faq-arrow {
+    font-size: 1.2rem;
+    color: var(--primary-dark);
+    transition: transform 0.3s ease;
 }
-.faq-item.active .faq-question i {
+.faq-item.active .faq-arrow {
     transform: rotate(180deg);
 }
-.faq-answer {
+.faq-item-body {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                padding 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: max-height 0.4s ease-out;
 }
-.faq-answer p {
+.faq-item-body p {
     padding: 0 20px 20px;
     line-height: 1.8;
     margin: 0;
 }
-.faq-item.active .faq-answer {
-    max-height: 200px; /* Valore sufficientemente alto */
-}
-
 
 /* --- SEZIONE CONTATTI --- */
 .contact-info .contact-email {
@@ -572,11 +582,11 @@ strong {
 }
 .footer-logo a {
     text-decoration: none;
+    color: white;
 }
 .footer-logo h3 {
     font-size: 1.8rem;
     margin-bottom: 15px;
-    color: white;
 }
 .footer-logo p { opacity: 0.7; }
 .footer-links-group h4 {
@@ -663,6 +673,13 @@ strong {
 .mobile-nav-links .nav-link { font-size: 1.5rem; color: var(--text-primary); }
 
 /* --- Media Queries --- */
+@media (max-width: 900px) {
+    .app-mockup-titles {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .mobile-menu { display: block; }
@@ -674,8 +691,15 @@ strong {
     .about-image { grid-row: 1; }
     .footer-content, .footer-bottom { text-align: center; }
     .social-icons { justify-content: center; }
-    .app-mockup-images { grid-template-columns: 1fr; }
+    .app-mockup-item img { height: 400px; }
 }
+
+@media (max-width: 480px) {
+    .app-mockup-titles {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 /* --- Indicatore di Scorrimento Animato --- */
 .scroll-down-indicator {
@@ -684,19 +708,20 @@ strong {
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
 }
+
 .scroll-down-indicator.hidden {
     opacity: 0;
-    visibility: hidden;
 }
+
 .mouse {
     width: 30px;
     height: 50px;
     border: 2px solid white;
     border-radius: 25px;
     position: relative;
-    opacity: 0.8;
 }
 .scroller {
     width: 4px;
@@ -707,9 +732,8 @@ strong {
     top: 8px;
     left: 50%;
     transform: translateX(-50%);
-    animation: scroll-down 2.2s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    animation: scroll-down 2.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
 }
-
 @keyframes scroll-down {
     0% {
         opacity: 1;
