@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Riporta la pagina all'inizio al refresh
-    window.history.scrollRestoration = 'manual';
+    // Torna all'inizio della pagina al refresh
     window.scrollTo(0, 0);
 
     const menuBtn = document.querySelector('.menu-btn');
@@ -15,11 +14,26 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileNav.classList.toggle('active');
     });
 
-    // Funzione per lo scorrimento dolce (smooth scroll)
+    // Funzione per lo scorrimento dolce (smooth scroll) per i link interni
     internalLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
+
+            // Per il link #home, scorre in cima alla pagina
+            if (targetId === '#home') {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                // Chiude il menu mobile se è aperto
+                if (mobileNav.classList.contains('active')) {
+                    menuBtn.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                }
+                return;
+            }
+
             const targetElement = document.querySelector(targetId);
 
             if (targetElement) {
@@ -28,42 +42,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     menuBtn.classList.remove('active');
                     mobileNav.classList.remove('active');
                 }
+
+                // Scorrimento dolce
                 targetElement.scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
 
-    // Nasconde l'indicatore di scroll quando l'utente scorre
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            scrollIndicator.classList.add('hidden');
-        } else {
-            scrollIndicator.classList.remove('hidden');
-        }
-    });
-
-    // Logica per le FAQ a tendina
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        question.addEventListener('click', () => {
-            const answer = item.querySelector('.faq-answer');
-            const isActive = item.classList.contains('active');
-
-            // Chiudi tutte le altre risposte
-            faqItems.forEach(otherItem => {
-                otherItem.classList.remove('active');
-                otherItem.querySelector('.faq-answer').style.maxHeight = null;
-            });
-
-            // Apri o chiudi la risposta corrente
-            if (!isActive) {
-                item.classList.add('active');
-                answer.style.maxHeight = answer.scrollHeight + 'px';
-            }
-        });
-    });
-
-    // Intersection Observer per l'effetto fade-in delle sezioni
+    // Intersection Observer per l'effetto fade-in
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -77,5 +63,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelectorAll('.section').forEach(section => {
         observer.observe(section);
+    });
+
+    // Nascondi l'indicatore di scorrimento dopo lo scroll
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            scrollIndicator.classList.add('hidden');
+        } else {
+            scrollIndicator.classList.remove('hidden');
+        }
+    });
+
+    // Logica per le FAQ (accordion)
+    faqItems.forEach(item => {
+        const header = item.querySelector('h4');
+        header.addEventListener('click', () => {
+            // Chiude tutti gli altri item
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            // Apre o chiude l'item cliccato
+            item.classList.toggle('active');
+        });
     });
 });
