@@ -1,25 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Riporta la pagina in cima al refresh
-    window.scrollTo(0, 0);
-
     const menuBtn = document.querySelector('.menu-btn');
     const mobileNav = document.querySelector('.mobile-nav-links');
     const internalLinks = document.querySelectorAll('a[href^="#"]');
     const scrollIndicator = document.querySelector('.scroll-down-indicator');
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    // Scroll to top on page refresh
+    window.addEventListener('beforeunload', () => {
+        window.scrollTo(0, 0);
+    });
+    if (history.scrollRestoration) {
+        history.scrollRestoration = 'manual';
+    } else {
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        }
+    }
+
 
     // Toggle del menu mobile
     menuBtn.addEventListener('click', function() {
         this.classList.toggle('active');
         mobileNav.classList.toggle('active');
-    });
-
-    // Gestione della scomparsa dell'indicatore di scorrimento
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 100) { // Nasconde l'indicatore dopo 100px di scroll
-            scrollIndicator.classList.add('hidden');
-        } else {
-            scrollIndicator.classList.remove('hidden');
-        }
     });
 
     // Funzione per lo scorrimento dolce (smooth scroll) per i link interni
@@ -34,36 +36,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     top: 0,
                     behavior: 'smooth'
                 });
-            } else {
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                // Chiude il menu mobile se è aperto
+                if (mobileNav.classList.contains('active')) {
+                    menuBtn.classList.remove('active');
+                    mobileNav.classList.remove('active');
                 }
+                return;
             }
 
-            // Chiude il menu mobile se è aperto
-            if (mobileNav.classList.contains('active')) {
-                menuBtn.classList.remove('active');
-                mobileNav.classList.remove('active');
-            }
-        });
-    });
+            const targetElement = document.querySelector(targetId);
 
-    // Logica per le FAQ espandibili
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        question.addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
+            if (targetElement) {
+                // Chiude il menu mobile se è aperto
+                if (mobileNav.classList.contains('active')) {
+                    menuBtn.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                }
 
-            // Chiudi tutte le altre domande aperte
-            faqItems.forEach(otherItem => {
-                otherItem.classList.remove('active');
-            });
-
-            // Apri o chiudi la domanda cliccata
-            if (!isActive) {
-                item.classList.add('active');
+                // Scorrimento dolce
+                targetElement.scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
@@ -82,5 +73,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelectorAll('.section').forEach(section => {
         observer.observe(section);
+    });
+
+    // Hide scroll-down indicator on scroll
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            scrollIndicator.classList.add('hidden');
+        } else {
+            scrollIndicator.classList.remove('hidden');
+        }
+    });
+
+    // FAQ Accordion
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const isActive = question.classList.contains('active');
+
+            // Chiudi tutte le altre risposte
+            faqQuestions.forEach(q => {
+                q.classList.remove('active');
+                q.nextElementSibling.style.maxHeight = null;
+            });
+
+            // Apri o chiudi la risposta cliccata
+            if (!isActive) {
+                question.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        });
     });
 });
