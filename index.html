@@ -8,615 +8,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        /* --- Variabili Globali --- */
-        :root {
-            --primary: #B39DDB;
-            --primary-light: #D1C4E9;
-            --primary-dark: #7E57C2;
-            --primary-darker: #5E35B1;
-            --background: #F5F5F5;
-            --card-bg: #FFFFFF;
-            --text: #424242;
-            --text-light: #757575;
-            --text-primary: var(--primary-dark);
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
-        }
-
-        /* --- Reset e Stili di Base --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 80px; /* Offset per la navbar fissa */
-        }
-
-        body {
-            background-color: var(--background);
-            background-image: url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png');
-            background-attachment: fixed;
-            color: var(--text);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        main {
-            flex: 1;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .narrow-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        /* --- Navbar --- */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 15px 20px;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.6rem;
-            color: var(--primary-dark);
-            font-weight: 700;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .navbar .logo-image {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav-link {
-            color: var(--text-light);
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: var(--primary-dark);
-            background-color: var(--primary-light);
-        }
-
-        /* --- Hero Section --- */
-        .hero-section {
-            min-height: 100vh;
-            background: linear-gradient(rgba(94, 53, 177, 0.6), rgba(94, 53, 177, 0.6)),
-                        url('https://images.unsplash.com/photo-1506126613408-4e05960270e5?auto=format&fit=crop&q=80&w=2070') no-repeat center center/cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 80px 20px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero-content h1 {
-            font-size: 3.2rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-            line-height: 1.2;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .hero-content .hero-subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        /* --- Pulsanti --- */
-        .btn {
-            display: inline-block;
-            padding: 14px 30px;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 4px 15px rgba(126, 87, 194, 0.3);
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(94, 53, 177, 0.4);
-        }
-
-        .btn-large {
-            padding: 16px 40px;
-            font-size: 1.2rem;
-        }
-
-        /* --- Sezioni Generali --- */
-        .section {
-            padding: 80px 0;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .section-in-container {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .bg-light {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            color: var(--text-primary);
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .section-subtitle {
-            font-size: 1.1rem;
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 50px;
-            color: var(--text-light);
-        }
-
-        /* --- Card --- */
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 30px;
-            box-shadow: var(--shadow-lg);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-            border: 1px solid rgba(179, 157, 219, 0.2);
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-icon, .feature-icon {
-            font-size: 2.8rem;
-            color: var(--primary-dark);
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--text-primary);
-        }
-
-        .solution-container {
-            background: rgba(209, 196, 233, 0.2);
-            border-radius: 20px;
-            padding: 50px 30px;
-            margin-top: 60px;
-        }
-
-        /* --- Sezioni Specifiche --- */
-        .mission-content, .app-grows-content {
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-        .app-grows-content p {
-            margin-bottom: 30px;
-        }
-
-        .mission-content p {
-            margin-bottom: 20px;
-        }
-
-        .features-grid {
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        }
-
-        /* --- SEZIONE TESTIMONIANZE CON SLIDER --- */
-        .testimonial-card-slider {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: none;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        .testimonial-text {
-            font-style: italic;
-            color: var(--text-light);
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-        .testimonial-author {
-            font-weight: 700;
-            color: var(--primary-dark);
-        }
-
-        @keyframes scroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(calc(-350px * 7)); }
-        }
-
-        .slider {
-            height: 250px;
-            margin: auto;
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-        }
-
-        .slider::before, .slider::after {
-            display: none;
-        }
-
-        .slide-track {
-            animation: scroll 40s linear infinite;
-            display: flex;
-            width: calc(350px * 14);
-            will-change: transform; /* <-- FIX PER LO SFARFALLIO */
-        }
-
-        .slider:hover .slide-track {
-            animation-play-state: paused;
-        }
-
-        .slide {
-            height: 250px;
-            width: 350px;
-            padding: 15px;
-        }
-        .slide .testimonial-card-slider {
-             height: 100%;
-        }
-
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            margin-top: 40px;
-        }
-
-        .about-text p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
-        .about-image img {
-            width: 100%;
-            max-width: 350px;
-            border-radius: 50%;
-            box-shadow: var(--shadow-lg);
-            margin: 0 auto;
-            display: block;
-            object-fit: cover;
-            aspect-ratio: 1 / 1;
-        }
-
-        /* --- SEZIONE CONTATTI --- */
-        .contact-info .contact-email {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--primary-dark);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        .contact-info .contact-email:hover {
-            color: var(--primary-darker);
-        }
-        .contact-info .contact-social-title {
-            margin-top: 30px;
-            margin-bottom: 20px;
-        }
-        .social-icons-contact {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-        }
-        .social-icons-contact a {
-            color: var(--primary-dark);
-            font-size: 2rem;
-            transition: all 0.3s ease;
-        }
-        .social-icons-contact a:hover {
-            transform: scale(1.1) translateY(-3px);
-            color: var(--primary-darker);
-        }
-
-        /* --- Sezione CTA --- */
-        .cta-section {
-            background: var(--primary-darker);
-            color: white;
-            padding: 70px 20px;
-        }
-
-        .cta-section h2 {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-
-        /* --- Sezioni Nascoste (Privacy, Termini) --- */
-        .hidden-section {
-            display: none;
-            padding: 120px 20px 80px;
-            background: var(--background);
-        }
-
-        .hidden-section h2 {
-            color: var(--text-primary);
-            margin-bottom: 30px;
-        }
-
-        .hidden-section p {
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        /* --- Footer --- */
-        .footer {
-            background: var(--primary-darker);
-            color: white;
-            padding: 60px 20px 30px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-            max-width: 1100px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .footer-logo h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
-        .footer-logo p {
-            opacity: 0.7;
-        }
-
-        .footer-links-group h4 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: var(--primary-light);
-        }
-
-        .footer-links-group ul {
-            list-style: none;
-        }
-
-        .footer-links-group ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links-group ul li a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links-group ul li a:hover {
-            color: white;
-        }
-
-        .footer-social h4 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: var(--primary-light);
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icons a {
-            color: white;
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            transform: scale(1.1) translateY(-2px);
-            color: var(--primary-light);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            max-width: 1100px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* --- Menu Mobile --- */
-        .mobile-menu {
-            display: none;
-            z-index: 9999;
-        }
-
-        .menu-btn {
-            position: relative;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-
-        .menu-btn span {
-            display: block;
-            width: 100%;
-            height: 3px;
-            background: var(--primary-dark);
-            margin: 5px 0;
-            transition: all 0.3s ease;
-            border-radius: 3px;
-        }
-
-        .menu-btn.active span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-        .menu-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .menu-btn.active span:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-
-        .mobile-nav-links {
-            position: fixed;
-            top: 70px;
-            right: -100%;
-            width: 100%;
-            height: calc(100vh - 70px);
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            z-index: 9998;
-            transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .mobile-nav-links.active {
-            right: 0;
-        }
-
-        .mobile-nav-links .nav-link {
-            font-size: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        /* --- Media Queries --- */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .mobile-menu {
-                display: block;
-            }
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            .hero-content .hero-subtitle {
-                font-size: 1.1rem;
-            }
-            .section {
-                padding: 60px 0;
-            }
-            .section-title {
-                font-size: 1.8rem;
-            }
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .about-image {
-                grid-row: 1;
-            }
-            .footer-content, .footer-bottom {
-                text-align: center;
-            }
-            .social-icons {
-                justify-content: center;
-            }
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="css/style.css"> </head>
 <body>
     <header class="navbar">
         <a href="#home" class="logo">
-            <img src="logo.jpg" alt="MindfulVista Logo" class="logo-image">
+            <img src="https://via.placeholder.com/40" alt="MindfulVista Logo" class="logo-image">
             <span>MindfulVista</span>
         </a>
         <nav class="nav-links">
@@ -624,8 +20,6 @@
             <a href="#mission" class="nav-link">La Missione</a>
             <a href="#features" class="nav-link">Funzionalità</a>
             <a href="#testimonials" class="nav-link">Feedback</a>
-            <a href="#about" class="nav-link">Chi Siamo</a>
-            <a href="#contacts" class="nav-link">Contatti</a>
         </nav>
         <div class="mobile-menu">
             <button class="menu-btn">
@@ -639,10 +33,8 @@
             <a href="#mission" class="nav-link">La Missione</a>
             <a href="#features" class="nav-link">Funzionalità</a>
             <a href="#testimonials" class="nav-link">Feedback</a>
-            <a href="#about" class="nav-link">Chi Siamo</a>
-            <a href="#contacts" class="nav-link">Contatti</a>
-            <a href="#privacy" class="nav-link">Privacy</a>
-            <a href="#terms" class="nav-link">Termini</a>
+            <a href="privacy.html" class="nav-link">Privacy</a>
+            <a href="terms.html" class="nav-link">Termini</a>
         </nav>
     </header>
 
@@ -652,6 +44,12 @@
                 <h1>La tua mente è il tuo rifugio più prezioso 🌿</h1>
                 <p class="hero-subtitle">Ritrova la pace interiore con la mindfulness e migliora il tuo benessere psicologico ogni giorno</p>
                 <a href="https://soulspilotfpv.github.io/testPWA/" class="btn btn-primary">Inizia la prova gratuita di 7 giorni</a>
+                <p class="hero-social-impact-note">Per ogni abbonamento annuale, ne doniamo uno a un giovane in difficoltà.</p>
+            </div>
+             <div class="scroll-down-indicator">
+                <div class="mouse">
+                    <div class="scroller"></div>
+                </div>
             </div>
         </section>
 
@@ -675,25 +73,12 @@
                         <p>Vivi le tue giornate in automatico, senza essere veramente presente?</p>
                     </div>
                 </div>
-
                 <div class="solution-container">
                     <h2 class="section-title">MindfulVista è la soluzione che ti permette di... 💡</h2>
                     <div class="grid-layout">
-                        <div class="card">
-                            <i class="fas fa-leaf card-icon"></i>
-                            <h3>Ridurre l'ansia</h3>
-                            <p>Impara tecniche di respirazione consapevole e meditazione guidata per calmare la mente.</p>
-                        </div>
-                        <div class="card">
-                            <i class="fas fa-spa card-icon"></i>
-                            <h3>Gestire lo stress</h3>
-                            <p>Scopri come trasformare lo stress in energia positiva con sessioni mirate.</p>
-                        </div>
-                        <div class="card">
-                            <i class="fas fa-eye card-icon"></i>
-                            <h3>Trovare consapevolezza</h3>
-                            <p>Vivi ogni momento con piena presenza grazie a esercizi pratici nella vita di tutti i giorni.</p>
-                        </div>
+                        <div class="card"> <i class="fas fa-leaf card-icon"></i> <h3>Ridurre l'ansia</h3> <p>Impara tecniche di respirazione consapevole e meditazione guidata per calmare la mente.</p> </div>
+                        <div class="card"> <i class="fas fa-spa card-icon"></i> <h3>Gestire lo stress</h3> <p>Scopri come trasformare lo stress in energia positiva con sessioni mirate.</p> </div>
+                        <div class="card"> <i class="fas fa-eye card-icon"></i> <h3>Trovare consapevolezza</h3> <p>Vivi ogni momento con piena presenza grazie a esercizi pratici.</p> </div>
                     </div>
                 </div>
             </div>
@@ -704,188 +89,107 @@
                 <h2 class="section-title">La nostra missione 🌱</h2>
                 <p class="section-subtitle">Non si tratta solo di meditazione, ma di un vero percorso di crescita personale</p>
                 <div class="mission-content">
-                    <p>
-                        Ti guidiamo nella tua crescita, <strong>giorno dopo giorno</strong>, con esercizi e percorsi guidati. Non si tratta solo di gestire l'ansia momentanea, ma di costruire un <strong>benessere duraturo</strong>.
-                    </p>
-                    <p>
-                        Vogliamo aiutarti a sostituire le abitudini che ti fanno male con <strong>abitudini sane</strong>. Noi forniamo gli strumenti, la guida e il supporto, ma sei tu il protagonista del tuo percorso.
-                    </p>
-                    <p>
-                        Ogni giorno, con piccoli passi, puoi trasformare la tua vita. Non promettiamo risultati immediati, ma un <strong>miglioramento costante</strong> che si radica nella tua quotidianità.
-                    </p>
+                    <p>Ti guidiamo nella tua crescita, <strong>giorno dopo giorno</strong>, con esercizi e percorsi guidati. Non si tratta solo di gestire l'ansia momentanea, ma di costruire un <strong>benessere duraturo</strong>.</p>
+                    <p>Vogliamo aiutarti a sostituire le abitudini che ti fanno male con <strong>abitudini sane</strong>. Noi forniamo gli strumenti, la guida e il supporto, ma sei tu il protagonista del tuo percorso.</p>
                 </div>
             </div>
         </section>
 
-        <section id="features" class="section section-in-container">
+        <section id="social-impact" class="section section-in-container">
+            <div class="container">
+                <h2 class="section-title">Un Gesto di Benessere ❤️</h2>
+                <p class="section-subtitle">Il tuo benessere aiuta quello degli altri. Scopri il nostro modello "Buy One, Give One".</p>
+                <div class="social-impact-content">
+                    <div class="social-impact-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <div class="social-impact-text">
+                        <h3>Quando acquisti, doni.</h3>
+                        <p>Crediamo che il benessere debba essere accessibile a tutti, specialmente ai più giovani. Per questo, per ogni abbonamento annuale o a vita acquistato, <strong>doniamo un accesso completo a MindfulVista a un ragazzo o una ragazza</strong> attraverso la nostra rete di partner come oratori, scuole e centri educativi.</p>
+                        <p>Scegliendo MindfulVista, non solo investi su te stesso, ma compi un gesto concreto per supportare la salute mentale delle nuove generazioni.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section bg-light section-in-container">
             <div class="container">
                 <h2 class="section-title">Funzionalità Principali ✨</h2>
                 <p class="section-subtitle">Scopri cosa rende MindfulVista un'app unica per il tuo benessere</p>
-                <div class="grid-layout features-grid">
-                    <div class="card">
-                        <i class="fas fa-brain feature-icon"></i>
-                        <h3>Meditazioni Guidate</h3>
-                        <p>Sessioni di mindfulness personalizzate per ogni momento della giornata, da 5 a 30 minuti.</p>
-                    </div>
-                    <div class="card">
-                        <i class="fas fa-chart-pie feature-icon"></i>
-                        <h3>Monitoraggio del Benessere</h3>
-                        <p>Tieni traccia del tuo umore, ansia e stress e visualizza i tuoi progressi nel tempo.</p>
-                    </div>
-                    <div class="card">
-                        <i class="fas fa-share-alt feature-icon"></i>
-                        <h3>Condivisione con il Terapista</h3>
-                        <p>Esporta facilmente i tuoi dati e condividili con il tuo professionista di fiducia.</p>
-                    </div>
-                    <div class="card">
-                        <i class="fas fa-users feature-icon"></i>
-                        <h3>Community Supportiva</h3>
-                        <p>Connetti con altri utenti che condividono il tuo percorso di crescita personale.</p>
-                    </div>
+                <div class="grid-layout">
+                    <div class="card"> <i class="fas fa-brain feature-icon"></i> <h3>Meditazioni Guidate</h3> <p>Sessioni personalizzate per ogni momento della giornata, da 5 a 30 minuti.</p> </div>
+                    <div class="card"> <i class="fas fa-chart-pie feature-icon"></i> <h3>Monitoraggio Benessere</h3> <p>Tieni traccia di umore, ansia e stress e visualizza i tuoi progressi.</p> </div>
+                    <div class="card"> <i class="fas fa-share-alt feature-icon"></i> <h3>Condivisione Terapista</h3> <p>Esporta facilmente i tuoi dati e condividili con il tuo professionista.</p> </div>
+                    <div class="card"> <i class="fas fa-users feature-icon"></i> <h3>Community Supportiva</h3> <p>Connetti con altri utenti che condividono il tuo percorso di crescita.</p> </div>
                 </div>
             </div>
         </section>
 
-        <section id="app-grows" class="section bg-light section-in-container">
+        <section id="app-showcase" class="section section-in-container">
             <div class="container text-center">
-                <h2 class="section-title">Un'app che cresce con te 🙌</h2>
-                <p class="section-subtitle">La tua esperienza sul campo è la nostra risorsa più preziosa.</p>
-                <div class="app-grows-content">
-                    <p>Crediamo in una crescita continua basata sui tuoi suggerimenti. La mindfulness è un viaggio personale, e ogni esperienza ci aiuta a migliorare MindfulVista per tutti. Hai un'idea per una nuova funzionalità o una meditazione che vorresti ascoltare? Faccelo sapere e potrebbe diventare parte della nostra app!</p>
-                    <a href="#contacts" class="btn btn-primary">Suggerisci una Funzionalità</a>
+                <h2 class="section-title">Un'interfaccia semplice e rilassante 📱</h2>
+                <p class="section-subtitle">Abbiamo progettato un'esperienza utente intuitiva per accompagnarti senza distrazioni.</p>
+                <div class="app-showcase-content">
+                    <img src="https://via.placeholder.com/300x600/D1C4E9/FFFFFF?text=Schermata+1" alt="Screenshot app 1" class="app-mockup">
+                    <img src="https://via.placeholder.com/300x600/B39DDB/FFFFFF?text=Schermata+2" alt="Screenshot app 2" class="app-mockup">
                 </div>
             </div>
         </section>
 
-        <section id="testimonials" class="section">
+        <section id="testimonials" class="section bg-light">
             <div class="container section-in-container">
                 <h2 class="section-title">Cosa dicono di noi 🌟</h2>
-                <p class="section-subtitle">Le storie di chi ha già iniziato il proprio percorso con MindfulVista. <br>Vuoi condividere la tua? Inviacela via <a href="mailto:info@mindfulvista.com" style="color: var(--primary-dark);">email</a> o tramite i nostri social!</p>
+                 <p class="section-subtitle">Le storie di chi ha già iniziato. Vuoi condividere la tua? <a href="LINK_AL_TUO_GOOGLE_FORM" target="_blank" style="color: var(--primary-dark); font-weight: 700;">Compila il nostro form!</a></p>
             </div>
             <div class="slider">
                 <div class="slide-track">
                     <div class="slide">
                          <div class="testimonial-card-slider">
+                            <div class="testimonial-stars">★★★★★</div>
                             <p class="testimonial-text">"MindfulVista mi ha cambiato la vita. Ho imparato a gestire l'ansia e a vivere il presente. Un'app semplice ma potentissima."</p>
                             <p class="testimonial-author">- Giulia M.</p>
                         </div>
                     </div>
                     <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"Finalmente un'app che non si limita a offrire meditazioni, ma che ti accompagna in un vero percorso di crescita. Il monitoraggio è utilissimo."</p>
-                            <p class="testimonial-author">- Marco T.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"La uso ogni mattina prima di iniziare a lavorare. Mi aiuta a trovare la concentrazione e ad affrontare la giornata con più calma. Consigliatissima!"</p>
-                            <p class="testimonial-author">- Elena R.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"Da quando uso MindfulVista dormo molto meglio. Le meditazioni per il sonno sono fantastiche."</p>
-                            <p class="testimonial-author">- Luca B.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"Un'ancora di salvezza nei momenti di stress. Bastano 5 minuti per sentirsi subito meglio. Grazie!"</p>
-                            <p class="testimonial-author">- Sara V.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"Ho provato tante app di mindfulness, ma questa è la più completa e facile da usare. La funzione di condivisione con il terapista è un plus."</p>
-                            <p class="testimonial-author">- Davide F.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"L'interfaccia è pulita e rilassante. L'app perfetta per chi vuole iniziare un percorso di consapevolezza."</p>
-                            <p class="testimonial-author">- Chiara P.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"MindfulVista mi ha cambiato la vita. Ho imparato a gestire l'ansia e a vivere il presente. Un'app semplice ma potentissima."</p>
-                            <p class="testimonial-author">- Giulia M.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"Finalmente un'app che non si limita a offrire meditazioni, ma che ti accompagna in un vero percorso di crescita. Il monitoraggio è utilissimo."</p>
-                            <p class="testimonial-author">- Marco T.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"La uso ogni mattina prima di iniziare a lavorare. Mi aiuta a trovare la concentrazione e ad affrontare la giornata con più calma. Consigliatissima!"</p>
-                            <p class="testimonial-author">- Elena R.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"Da quando uso MindfulVista dormo molto meglio. Le meditazioni per il sonno sono fantastiche."</p>
-                            <p class="testimonial-author">- Luca B.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"Un'ancora di salvezza nei momenti di stress. Bastano 5 minuti per sentirsi subito meglio. Grazie!"</p>
-                            <p class="testimonial-author">- Sara V.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"Ho provato tante app di mindfulness, ma questa è la più completa e facile da usare. La funzione di condivisione con il terapista è un plus."</p>
-                            <p class="testimonial-author">- Davide F.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                         <div class="testimonial-card-slider">
-                            <p class="testimonial-text">"L'interfaccia è pulita e rilassante. L'app perfetta per chi vuole iniziare un percorso di consapevolezza."</p>
-                            <p class="testimonial-author">- Chiara P.</p>
-                        </div>
-                    </div>
+                        <div class="testimonial-card-slider">
+                           <div class="testimonial-stars">★★★★★</div>
+                           <p class="testimonial-text">"Finalmente un'app che non si limita a offrire meditazioni, ma che ti accompagna in un vero percorso di crescita. Il monitoraggio è utilissimo."</p>
+                           <p class="testimonial-author">- Marco T.</p>
+                       </div>
+                   </div>
+                   <div class="slide"> <div class="testimonial-card-slider"> <div class="testimonial-stars">★★★★★</div> <p class="testimonial-text">"La uso ogni mattina. Mi aiuta a trovare la concentrazione e ad affrontare la giornata con più calma. Consigliatissima!"</p><p class="testimonial-author">- Elena R.</p></div></div>
+                   <div class="slide"> <div class="testimonial-card-slider"> <div class="testimonial-stars">★★★★★</div> <p class="testimonial-text">"Da quando uso MindfulVista dormo molto meglio. Le meditazioni per il sonno sono fantastiche."</p><p class="testimonial-author">- Luca B.</p></div></div>
+                   <div class="slide"> <div class="testimonial-card-slider"> <div class="testimonial-stars">★★★★★</div> <p class="testimonial-text">"Un'ancora di salvezza nei momenti di stress. Bastano 5 minuti per sentirsi subito meglio. Grazie!"</p><p class="testimonial-author">- Sara V.</p></div></div>
+                   <div class="slide"> <div class="testimonial-card-slider"> <div class="testimonial-stars">★★★★★</div> <p class="testimonial-text">"Ho provato tante app di mindfulness, ma questa è la più completa e facile da usare."</p><p class="testimonial-author">- Davide F.</p></div></div>
+                   <div class="slide"> <div class="testimonial-card-slider"> <div class="testimonial-stars">★★★★★</div> <p class="testimonial-text">"L'interfaccia è pulita e rilassante. L'app perfetta per chi vuole iniziare un percorso di consapevolezza."</p><p class="testimonial-author">- Chiara P.</p></div></div>
+                   <div class="slide"> <div class="testimonial-card-slider"> <div class="testimonial-stars">★★★★★</div> <p class="testimonial-text">"MindfulVista mi ha cambiato la vita. Ho imparato a gestire l'ansia e a vivere il presente. Un'app semplice ma potentissima."</p><p class="testimonial-author">- Giulia M.</p></div></div>
+                   <div class="slide"> <div class="testimonial-card-slider"> <div class="testimonial-stars">★★★★★</div> <p class="testimonial-text">"Finalmente un'app che non si limita a offrire meditazioni, ma che ti accompagna in un vero percorso di crescita."</p><p class="testimonial-author">- Marco T.</p></div></div>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="section bg-light section-in-container">
+        <section id="faq" class="section section-in-container">
             <div class="container">
-                <h2 class="section-title">Chi c'è dietro MindfulVista 🙏</h2>
-                <div class="about-content">
-                    <div class="about-text">
-                        <p>
-                            <strong>Ciao, sono Sofia.</strong> Ho creato MindfulVista dopo aver lottato per anni con ansia e stress cronici. Ho trovato la vera pace interiore solo quando ho iniziato a praticare la mindfulness in modo costante.
-                        </p>
-                        <p>
-                            Durante il mio percorso, ho capito che la chiave non è solo ascoltare meditazioni, ma integrare la consapevolezza nella vita quotidiana.
-                        </p>
-                        <p>
-                            MindfulVista è nata da questa esperienza personale, con l'obiettivo di creare uno strumento che unisce pratica quotidiana, monitoraggio del benessere e supporto per la crescita personale.
-                        </p>
+                <h2 class="section-title">Domande Frequenti 🤔</h2>
+                <p class="section-subtitle">Hai qualche dubbio? Qui trovi le risposte alle domande più comuni.</p>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question">Cosa succede dopo i 7 giorni di prova gratuita?</button>
+                        <div class="faq-answer">
+                            <p>Al termine della prova gratuita, potrai decidere se sottoscrivere un abbonamento (mensile o annuale) per continuare ad accedere a tutti i contenuti. Se non fai nulla, non ti verrà addebitato alcun costo.</p>
+                        </div>
                     </div>
-                    <div class="about-image">
-                        <img src="fonder.jpg" alt="Fondatrice di MindfulVista">
+                    <div class="faq-item">
+                        <button class="faq-question">Posso cancellare l'abbonamento quando voglio?</button>
+                        <div class="faq-answer">
+                            <p>Assolutamente sì. Puoi gestire e cancellare il tuo abbonamento in qualsiasi momento dalle impostazioni del tuo account, senza costi aggiuntivi o penali.</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contacts" class="section section-in-container">
-            <div class="container text-center">
-                <h2 class="section-title">Contattaci 💌</h2>
-                <p class="section-subtitle">Hai domande, suggerimenti o vuoi semplicemente salutarci? Siamo qui per ascoltarti.</p>
-                <div class="contact-info">
-                    <p>Puoi scriverci una mail a:</p>
-                    <a href="mailto:info@mindfulvista.com" class="contact-email">info@mindfulvista.com</a>
-                    <p class="contact-social-title">Oppure seguici sui nostri canali social:</p>
-                     <div class="social-icons-contact">
-                        <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <div class="faq-item">
+                        <button class="faq-question">I miei dati personali e di monitoraggio sono al sicuro?</button>
+                        <div class="faq-answer">
+                            <p>La tua privacy è la nostra massima priorità. Tutti i dati sono crittografati e trattati in conformità con il GDPR. Non condividiamo mai i tuoi dati con terzi senza il tuo esplicito consenso. Per maggiori dettagli, consulta la nostra <a href="privacy.html">Privacy Policy</a>.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -895,54 +199,37 @@
             <div class="container text-center">
                 <h2>Pronto a trasformare la tua vita? 🌸</h2>
                 <p>Inizia oggi stesso la tua prova gratuita di 7 giorni e scopri come MindfulVista può aiutarti a ritrovare la pace interiore.</p>
-                <a href="https://soulspilotfpv.github.io/testPWA/" class="btn btn-primary btn-large">Inizia la prova gratuita</a>
+                <a href="https://soulspilotfpv.github.io/testPWA/" class="btn btn-primary btn-large">Inizia la prova e aiuta un giovane</a>
             </div>
         </section>
 
-        <section class="hidden-section" id="privacy">
-            <div class="container narrow-content">
-                <h2>Privacy Policy 🔐</h2>
-                <p><strong>Conformità al GDPR:</strong> Raccogliamo solo dati necessari per il funzionamento dell'app. Non condividiamo mai i tuoi dati con terzi senza il tuo consenso esplicito. Hai il diritto di accedere, correggere o cancellare i tuoi dati in qualsiasi momento.</p>
-                <p><strong>La tua privacy è importante:</strong> Tutti i dati sono trattati in conformità al Regolamento Europeo (GDPR). I dati dell'app (umore, ansia, stress) sono crittografati e al sicuro.</p>
-            </div>
-        </section>
-        <section class="hidden-section" id="terms">
-            <div class="container narrow-content">
-                <h2>Termini di Servizio 📜</h2>
-                <p><strong>Condizioni d'uso:</strong> L'app è destinata a uso personale e non commerciale. Non è consentita la distribuzione o modifica del contenuto senza autorizzazione. L'accesso e l'utilizzo dell'app implicano l'accettazione dei termini qui descritti.</p>
-            </div>
-        </section>
     </main>
 
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>MindfulVista</h3>
-                    <p>La tua oasi di pace quotidiana</p>
-                </div>
+                <div class="footer-logo"><h3>MindfulVista</h3><p>La tua oasi di pace quotidiana</p></div>
                 <div class="footer-links-group">
                     <h4>Link Utili</h4>
                     <ul>
-                        <li><a href="#mission" class="footer-link">La Missione</a></li>
-                        <li><a href="#features" class="footer-link">Funzionalità</a></li>
-                         <li><a href="#about" class="footer-link">Chi Siamo</a></li>
-                         <li><a href="#contacts" class="footer-link">Contatti</a></li>
+                        <li><a href="#mission">La Missione</a></li>
+                        <li><a href="#features">Funzionalità</a></li>
+                        <li><a href="#faq">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="footer-links-group">
                     <h4>Legal</h4>
                     <ul>
-                        <li><a href="#privacy" class="footer-link">Privacy Policy</a></li>
-                        <li><a href="#terms" class="footer-link">Termini di Servizio</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Termini di Servizio</a></li>
                     </ul>
                 </div>
                 <div class="footer-social">
                     <h4>Seguici</h4>
                     <div class="social-icons">
-                        <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
             </div>
@@ -954,68 +241,53 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Gestione Menu Mobile
             const menuBtn = document.querySelector('.menu-btn');
             const mobileNav = document.querySelector('.mobile-nav-links');
-            const allNavLinks = document.querySelectorAll('a[href^="#"]');
-            const mainContentSections = document.querySelectorAll('main > section:not(.hidden-section)');
-            const hiddenSections = document.querySelectorAll('.hidden-section');
-
-            // Toggle mobile menu
-            menuBtn.addEventListener('click', function() {
-                this.classList.toggle('active');
+            menuBtn.addEventListener('click', () => {
+                menuBtn.classList.toggle('active');
                 mobileNav.classList.toggle('active');
             });
 
-            // Funzione per gestire la navigazione
-            function handleNavigation(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
-                if (!targetElement) return;
-
-                // Chiude il menu mobile se aperto
-                if (mobileNav.classList.contains('active')) {
-                    menuBtn.classList.remove('active');
-                    mobileNav.classList.remove('active');
-                }
-
-                const isHiddenSectionTarget = targetElement.classList.contains('hidden-section');
-
-                // Mostra/nasconde le sezioni corrette
-                if (isHiddenSectionTarget) {
-                    mainContentSections.forEach(s => s.style.display = 'none');
-                    hiddenSections.forEach(s => s.style.display = 'none');
-                    targetElement.style.display = 'block';
-                } else {
-                    mainContentSections.forEach(s => s.style.display = ''); // <-- FIX PER IL LAYOUT ROTTO
-                    hiddenSections.forEach(s => s.style.display = 'none');
-                }
-
-                // Esegue lo scorrimento
-                if (targetId === '#home') {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-
-            // Applica il listener a tutti i link interni
-            allNavLinks.forEach(link => {
-                link.addEventListener('click', handleNavigation);
+            // Chiusura menu mobile al click su un link
+            document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (mobileNav.classList.contains('active')) {
+                        menuBtn.classList.remove('active');
+                        mobileNav.classList.remove('active');
+                    }
+                });
             });
 
-            // Intersection Observer per l'effetto fade-in
+            // Gestione Accordion FAQ
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    const isActive = question.classList.contains('active');
+
+                    // Chiudi tutte le altre risposte
+                    faqQuestions.forEach(q => {
+                        q.classList.remove('active');
+                        q.nextElementSibling.style.maxHeight = null;
+                    });
+
+                    // Apri/chiudi la risposta corrente
+                    if (!isActive) {
+                        question.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + "px";
+                    }
+                });
+            });
+
+            // Intersection Observer per animazione fade-in
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     }
                 });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
             document.querySelectorAll('.section').forEach(section => {
                 observer.observe(section);
