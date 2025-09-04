@@ -1,13 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // =================================================================================
-    // MODIFICA CHIAVE: Scroll-to-top al refresh della pagina
-    // Questa parte assicura che la pagina torni sempre in cima quando viene ricaricata.
-    // 'history.scrollRestoration' disabilita il comportamento di default del browser
-    // che cerca di ripristinare la posizione di scorrimento precedente.
-    // =================================================================================
+    // Forza il browser a non ripristinare la posizione di scorrimento precedente
+    // Questa è la soluzione più robusta per garantire che la pagina torni in cima al refresh.
     if (history.scrollRestoration) {
         history.scrollRestoration = 'manual';
     }
+    // Riporta la pagina all'inizio al caricamento
     window.scrollTo(0, 0);
 
     const menuBtn = document.querySelector('.menu-btn');
@@ -45,14 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // =================================================================================
-    // MODIFICA CHIAVE: Intersection Observer per animazioni allo scroll
-    // Questo observer controlla quali sezioni della pagina sono visibili.
-    // Quando una sezione con la classe ".section" entra nello schermo,
-    // le viene aggiunta la classe ".visible", che attiva le animazioni CSS.
-    // Questo codice gestisce l'animazione di tutte le sezioni, inclusa quella
-    // nuova degli studi scientifici e quella degli screenshot.
-    // =================================================================================
+    // Intersection Observer per l'effetto fade-in delle sezioni
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -64,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         rootMargin: '0px 0px -50px 0px'
     });
 
+    // L'observer si applica a tutte le sezioni, inclusa la nuova sezione "studies"
     document.querySelectorAll('.section').forEach(section => {
         observer.observe(section);
     });
@@ -81,11 +72,13 @@ document.addEventListener('DOMContentLoaded', function() {
     faqItems.forEach(item => {
         const header = item.querySelector('h4');
         header.addEventListener('click', () => {
+            // Chiudi tutti gli altri item aperti
             faqItems.forEach(openItem => {
                 if(openItem !== item && openItem.classList.contains('active')) {
                     openItem.classList.remove('active');
                 }
             });
+            // Apri/chiudi l'item cliccato
             item.classList.toggle('active');
         });
     });

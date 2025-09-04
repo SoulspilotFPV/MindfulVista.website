@@ -192,20 +192,28 @@ strong {
     font-size: 1.2rem;
 }
 
-/* MODIFICA: Aggiunto stile per il pulsante secondario */
+/* ============================================== */
+/* ========= NUOVO STILE PULSANTE SECONDARIO ==== */
+/* ============================================== */
 .btn-secondary {
-    background-color: transparent;
-    color: var(--primary-dark);
-    border: 2px solid var(--primary-light);
+    display: inline-block;
     padding: 10px 20px;
-    font-size: 0.9rem;
     margin-top: 15px;
+    font-size: 0.9rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid var(--primary-light);
+    color: var(--primary-dark);
+    background: transparent;
 }
 
 .btn-secondary:hover {
-    background-color: var(--primary-light);
+    background: var(--primary-light);
     color: var(--primary-darker);
-    border-color: var(--primary-light);
+    transform: translateY(-2px);
 }
 
 
@@ -312,6 +320,13 @@ strong {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
+.studies-grid .card {
+    text-align: left;
+}
+.studies-grid .card-icon {
+    margin-bottom: 15px;
+}
+
 /* --- SEZIONE SOCIAL MODEL --- */
 .social-model-content {
     max-width: 700px;
@@ -328,7 +343,7 @@ strong {
 .app-showcase-container {
     position: relative;
     width: 100%;
-    height: 550px;
+    height: 550px; /* Altezza per contenere gli screenshot */
     margin-top: 40px;
     display: flex;
     justify-content: center;
@@ -345,11 +360,13 @@ strong {
     transform-origin: center center;
 }
 
+/* Stato iniziale "casuale" e sovrapposto */
 .screen-1 { transform: rotate(-5deg) translate(-20px, 0); z-index: 4; }
 .screen-2 { transform: rotate(3deg) translate(20px, 10px); z-index: 3; }
 .screen-3 { transform: rotate(8deg) translate(-10px, 5px); z-index: 2; }
 .screen-4 { transform: rotate(-3deg) translate(10px, -10px); z-index: 1; }
 
+/* Stato finale "espanso" quando la sezione è visibile */
 .section.visible .screen-1 { transform: translateX(-160%) rotate(-8deg); }
 .section.visible .screen-2 { transform: translateX(-55%) rotate(-3deg); }
 .section.visible .screen-3 { transform: translateX(55%) rotate(3deg); }
@@ -416,11 +433,6 @@ strong {
     padding: 15px;
 }
 .slide .testimonial-card-slider { height: 100%; }
-
-/* MODIFICA: Griglia per la sezione studi */
-.studies-grid {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-}
 
 .about-content {
     display: grid;
@@ -493,7 +505,7 @@ strong {
     align-items: center;
 }
 .faq-item h4::after {
-    content: '\f078';
+    content: '\f078'; /* Font Awesome down arrow */
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     transition: transform 0.4s ease;
@@ -509,7 +521,7 @@ strong {
     padding: 0 20px;
 }
 .faq-item.active p {
-    max-height: 200px;
+    max-height: 200px; /* Altezza sufficiente a contenere la risposta */
     padding: 0 20px 20px;
 }
 
@@ -684,6 +696,7 @@ strong {
 
 /* --- Media Queries --- */
 @media (max-width: 1200px) {
+    /* Adatta la visuale espansa per schermi più piccoli */
     .section.visible .screen-1 { transform: translateX(-120%) rotate(-8deg); }
     .section.visible .screen-2 { transform: translateX(-40%) rotate(-3deg); }
     .section.visible .screen-3 { transform: translateX(40%) rotate(3deg); }
@@ -701,37 +714,47 @@ strong {
     .about-image { grid-row: 1; }
     .footer-content, .footer-bottom { text-align: center; }
     .social-icons { justify-content: center; }
-    .studies-grid { grid-template-columns: 1fr; }
 
-    /* MODIFICA: Nuova visualizzazione coerente per gli screen su mobile */
+    /* ============================================== */
+    /* === NUOVA VISUALIZZAZIONE SCREENSHOT MOBILE ==== */
+    /* ============================================== */
     .app-showcase-container {
         height: 350px;
+        margin-bottom: 40px;
     }
     .showcase-screen {
-        height: 280px;
-        /* Riduciamo l'effetto di "casualità" iniziale per mobile */
-        transform-origin: bottom center;
+        height: 300px;
+        /* Riduciamo l'opacità per dare un effetto di profondità */
+        opacity: 0.9;
     }
-    .screen-1 { transform: rotate(-3deg) translate(-5px, 0); }
-    .screen-2 { transform: rotate(2deg) translate(5px, 5px); }
-    .screen-3 { transform: rotate(4deg) translate(-3px, 3px); }
-    .screen-4 { transform: rotate(-2deg) translate(3px, -5px); }
+    /* Stato iniziale sovrapposto e compatto */
+    .screen-1 { transform: scale(0.9) rotate(-3deg) translateX(-30px); z-index: 4; }
+    .screen-2 { transform: scale(0.9) rotate(2deg) translateX(-10px); z-index: 3; }
+    .screen-3 { transform: scale(0.9) rotate(-2deg) translateX(10px); z-index: 2; }
+    .screen-4 { transform: scale(0.9) rotate(3deg) translateX(30px); z-index: 1; }
 
-    .section.visible .screen-1 { transform: translateX(-65%) rotate(-8deg) translateY(-10px); }
-    .section.visible .screen-2 { transform: translateX(-20%) rotate(-3deg); }
-    .section.visible .screen-3 { transform: translateX(20%) rotate(3deg); }
-    .section.visible .screen-4 { transform: translateX(65%) rotate(8deg) translateY(-10px); }
+    /* Stato finale espanso e a ventaglio orizzontale */
+    .section.visible .app-showcase-container {
+        perspective: 1000px;
+    }
+    .section.visible .showcase-screen {
+        opacity: 1;
+    }
+    .section.visible .screen-1 { transform: translateX(-90%) rotate(-6deg); }
+    .section.visible .screen-2 { transform: translateX(-30%) rotate(-2deg); }
+    .section.visible .screen-3 { transform: translateX(30%) rotate(2deg); }
+    .section.visible .screen-4 { transform: translateX(90%) rotate(6deg); }
 }
 
 @media (max-width: 480px) {
-    .app-showcase-container {
-        height: 300px;
-    }
-    .showcase-screen {
-        height: 240px;
-    }
-    .section.visible .screen-1 { transform: translateX(-70%) rotate(-8deg) translateY(-10px); }
-    .section.visible .screen-4 { transform: translateX(70%) rotate(8deg) translateY(-10px); }
+    .app-showcase-container { height: 280px; }
+    .showcase-screen { height: 240px; }
+
+    /* Adattiamo ulteriormente il ventaglio per schermi molto piccoli */
+    .section.visible .screen-1 { transform: translateX(-100%) rotate(-6deg); }
+    .section.visible .screen-2 { transform: translateX(-33%) rotate(-2deg); }
+    .section.visible .screen-3 { transform: translateX(33%) rotate(2deg); }
+    .section.visible .screen-4 { transform: translateX(100%) rotate(6deg); }
 }
 
 /* --- Indicatore di Scorrimento Animato --- */
