@@ -300,43 +300,44 @@ strong {
     margin-bottom: 20px;
 }
 
-/* --- SEZIONE APP PREVIEW SLIDER --- */
-@keyframes app-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(calc(-280px * 4)); }
-}
-
-.app-slider {
-    height: 500px;
-    margin: auto;
-    overflow: hidden;
+/* --- SEZIONE APP PREVIEW STACK --- */
+.app-preview-stack {
     position: relative;
     width: 100%;
+    max-width: 280px;
+    height: 550px;
+    margin: 50px auto 0;
 }
-.app-slider::before, .app-slider::after { display: none; }
-.app-slide-track {
-    animation: app-scroll 30s linear infinite;
-    display: flex;
-    width: calc(280px * 8);
-    backface-visibility: hidden;
-    will-change: transform;
+
+.app-preview-item {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 0;
+    left: 0;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-.app-slider:hover .app-slide-track {
-    animation-play-state: paused;
-}
-.app-slide {
-    height: 500px;
-    width: 280px;
-    padding: 0 15px;
-}
-.app-slide img {
-    height: 100%;
-    width: auto;
+
+.app-preview-item img {
+    width: 100%;
     border-radius: 25px;
     box-shadow: var(--shadow-lg);
     user-select: none;
 }
 
+#screen_1 { transform: rotate(8deg); z-index: 4; }
+#screen_2 { transform: rotate(-5deg); z-index: 3; }
+#screen_3 { transform: rotate(5deg); z-index: 2; }
+#screen_4 { transform: rotate(-8deg); z-index: 1; }
+
+.app-preview-stack:hover #screen_1 { transform: translateY(0) rotate(0) scale(1.02); }
+.app-preview-stack:hover #screen_2 { transform: translateY(110%) rotate(0) scale(1.02); }
+.app-preview-stack:hover #screen_3 { transform: translateY(220%) rotate(0) scale(1.02); }
+.app-preview-stack:hover #screen_4 { transform: translateY(330%) rotate(0) scale(1.02); }
+
+#app-preview {
+    padding-bottom: 300px;
+}
 
 /* --- SEZIONE TESTIMONIANZE CON SLIDER --- */
 .testimonial-card-slider {
@@ -612,6 +613,19 @@ strong {
     margin-right: auto;
 }
 
+/* --- Animazioni Hamburger --- */
+@keyframes converge-rotate-top {
+    0% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(8px) rotate(0); }
+    100% { transform: translateY(8px) rotate(45deg); }
+}
+
+@keyframes converge-rotate-bottom {
+    0% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-8px) rotate(0); }
+    100% { transform: translateY(-8px) rotate(-45deg); }
+}
+
 /* --- Menu Mobile --- */
 .mobile-menu { display: none; z-index: 9999; }
 .menu-btn {
@@ -629,18 +643,23 @@ strong {
     background: var(--primary-dark);
     margin: 5px 0;
     border-radius: 3px;
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.3s ease;
 }
+
+.menu-btn.active span {
+    transition: none; /* Disattiva la transizione di ritorno per usare l'animazione */
+}
+
 .menu-btn.active span:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
+    animation: converge-rotate-top 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 .menu-btn.active span:nth-child(2) {
-    transform: scaleX(0);
     opacity: 0;
 }
 .menu-btn.active span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
+    animation: converge-rotate-bottom 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
+
 .mobile-nav-links {
     position: fixed;
     top: 70px;
@@ -672,6 +691,12 @@ strong {
     .about-image { grid-row: 1; }
     .footer-content, .footer-bottom { text-align: center; }
     .social-icons { justify-content: center; }
+    .app-preview-stack { height: 450px; }
+    #app-preview { padding-bottom: 250px; }
+}
+
+@media (max-width: 480px) {
+    .app-preview-stack { max-width: 240px; }
 }
 
 /* --- Indicatore di Scorrimento Animato --- */
