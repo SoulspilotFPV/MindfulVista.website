@@ -1,21 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Riporta la pagina all'inizio al caricamento
+    window.scrollTo(0, 0);
+
     const menuBtn = document.querySelector('.menu-btn');
     const mobileNav = document.querySelector('.mobile-nav-links');
     const internalLinks = document.querySelectorAll('a[href^="#"]');
     const scrollIndicator = document.querySelector('.scroll-down-indicator');
     const faqItems = document.querySelectorAll('.faq-item');
-
-    // Riporta la pagina all'inizio al refresh
-    // Questo è il modo più affidabile per farlo su tutti i browser
-    if (history.scrollRestoration) {
-        history.scrollRestoration = 'manual';
-    }
-    window.addEventListener('beforeunload', () => {
-        window.scrollTo(0, 0);
-    });
-    // Fornisce un fallback per browser meno recenti o in casi specifici
-    window.scrollTo(0, 0);
-
 
     // Toggle del menu mobile
     menuBtn.addEventListener('click', function() {
@@ -34,9 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    // Calcola la posizione di scorrimento tenendo conto dell'altezza della navbar fissa
-                    const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 80; // 80px è l'altezza approssimativa della navbar
-                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
             }
 
