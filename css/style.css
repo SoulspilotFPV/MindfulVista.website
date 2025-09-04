@@ -172,6 +172,7 @@ strong {
     cursor: pointer;
     transition: all 0.3s ease;
     border: none;
+    text-align: center;
 }
 
 .btn-primary {
@@ -190,6 +191,23 @@ strong {
     padding: 16px 40px;
     font-size: 1.2rem;
 }
+
+/* MODIFICA: Aggiunto stile per il pulsante secondario */
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary-dark);
+    border: 2px solid var(--primary-light);
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    margin-top: 15px;
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-darker);
+    border-color: var(--primary-light);
+}
+
 
 /* --- Sezioni Generali --- */
 .section {
@@ -294,35 +312,19 @@ strong {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-/* ============================================
-STILI NUOVA SEZIONE STUDI SCIENTIFICI
-============================================
-*/
-.study-card {
-    justify-content: space-between;
+/* --- SEZIONE SOCIAL MODEL --- */
+.social-model-content {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.1rem;
 }
-
-.study-link {
-    display: inline-block;
-    margin-top: 20px;
-    font-weight: 700;
+.social-model-icon {
+    font-size: 3rem;
     color: var(--primary-dark);
-    text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 20px;
-    transition: all 0.3s ease;
+    margin-bottom: 20px;
 }
 
-.study-link:hover {
-    background-color: var(--primary-light);
-    color: var(--primary-darker);
-}
-
-
-/* ============================================
-STILI SEZIONE APP SHOWCASE (DESKTOP)
-============================================
-*/
+/* --- SEZIONE APP SHOWCASE --- */
 .app-showcase-container {
     position: relative;
     width: 100%;
@@ -343,13 +345,11 @@ STILI SEZIONE APP SHOWCASE (DESKTOP)
     transform-origin: center center;
 }
 
-/* Stato iniziale "casuale" e sovrapposto */
 .screen-1 { transform: rotate(-5deg) translate(-20px, 0); z-index: 4; }
 .screen-2 { transform: rotate(3deg) translate(20px, 10px); z-index: 3; }
 .screen-3 { transform: rotate(8deg) translate(-10px, 5px); z-index: 2; }
 .screen-4 { transform: rotate(-3deg) translate(10px, -10px); z-index: 1; }
 
-/* Stato finale "espanso" quando la sezione è visibile */
 .section.visible .screen-1 { transform: translateX(-160%) rotate(-8deg); }
 .section.visible .screen-2 { transform: translateX(-55%) rotate(-3deg); }
 .section.visible .screen-3 { transform: translateX(55%) rotate(3deg); }
@@ -416,6 +416,11 @@ STILI SEZIONE APP SHOWCASE (DESKTOP)
     padding: 15px;
 }
 .slide .testimonial-card-slider { height: 100%; }
+
+/* MODIFICA: Griglia per la sezione studi */
+.studies-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
 
 .about-content {
     display: grid;
@@ -488,7 +493,7 @@ STILI SEZIONE APP SHOWCASE (DESKTOP)
     align-items: center;
 }
 .faq-item h4::after {
-    content: '\f078'; /* Font Awesome down arrow */
+    content: '\f078';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     transition: transform 0.4s ease;
@@ -504,7 +509,7 @@ STILI SEZIONE APP SHOWCASE (DESKTOP)
     padding: 0 20px;
 }
 .faq-item.active p {
-    max-height: 200px; /* Altezza sufficiente a contenere la risposta */
+    max-height: 200px;
     padding: 0 20px 20px;
 }
 
@@ -679,7 +684,6 @@ STILI SEZIONE APP SHOWCASE (DESKTOP)
 
 /* --- Media Queries --- */
 @media (max-width: 1200px) {
-    /* Adatta la visuale espansa per schermi più piccoli */
     .section.visible .screen-1 { transform: translateX(-120%) rotate(-8deg); }
     .section.visible .screen-2 { transform: translateX(-40%) rotate(-3deg); }
     .section.visible .screen-3 { transform: translateX(40%) rotate(3deg); }
@@ -697,49 +701,37 @@ STILI SEZIONE APP SHOWCASE (DESKTOP)
     .about-image { grid-row: 1; }
     .footer-content, .footer-bottom { text-align: center; }
     .social-icons { justify-content: center; }
+    .studies-grid { grid-template-columns: 1fr; }
 
-    /* ============================================
-    NUOVA VISUALIZZAZIONE SCREENSHOT SU MOBILE
-    Trasformato in uno slider orizzontale con snap.
-    ============================================
-    */
+    /* MODIFICA: Nuova visualizzazione coerente per gli screen su mobile */
     .app-showcase-container {
-        display: flex;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding: 20px 20px 30px 20px;
-        margin: 0 -20px;
-        scroll-snap-type: x mandatory;
-        height: auto;
-    }
-    .app-showcase-container::-webkit-scrollbar {
-        display: none; /* Nasconde la scrollbar */
+        height: 350px;
     }
     .showcase-screen {
-        position: static;
-        transform: none !important; /* Resetta le trasformazioni desktop */
-        flex: 0 0 auto;
-        height: 400px;
-        width: auto;
-        margin: 0 15px;
-        scroll-snap-align: center;
+        height: 280px;
+        /* Riduciamo l'effetto di "casualità" iniziale per mobile */
+        transform-origin: bottom center;
     }
-    /* Rimuove le classi di stato iniziale, non più necessarie su mobile */
-    .screen-1, .screen-2, .screen-3, .screen-4 {
-        transform: none;
-        z-index: auto;
-    }
+    .screen-1 { transform: rotate(-3deg) translate(-5px, 0); }
+    .screen-2 { transform: rotate(2deg) translate(5px, 5px); }
+    .screen-3 { transform: rotate(4deg) translate(-3px, 3px); }
+    .screen-4 { transform: rotate(-2deg) translate(3px, -5px); }
+
+    .section.visible .screen-1 { transform: translateX(-65%) rotate(-8deg) translateY(-10px); }
+    .section.visible .screen-2 { transform: translateX(-20%) rotate(-3deg); }
+    .section.visible .screen-3 { transform: translateX(20%) rotate(3deg); }
+    .section.visible .screen-4 { transform: translateX(65%) rotate(8deg) translateY(-10px); }
 }
 
 @media (max-width: 480px) {
     .app-showcase-container {
-        padding-left: 20px;
-        padding-right: 20px;
+        height: 300px;
     }
     .showcase-screen {
-        height: 320px;
-        margin: 0 10px;
+        height: 240px;
     }
+    .section.visible .screen-1 { transform: translateX(-70%) rotate(-8deg) translateY(-10px); }
+    .section.visible .screen-4 { transform: translateX(70%) rotate(8deg) translateY(-10px); }
 }
 
 /* --- Indicatore di Scorrimento Animato --- */
