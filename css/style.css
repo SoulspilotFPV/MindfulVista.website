@@ -288,9 +288,7 @@ strong {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-/* ================================================== */
-/* ========= STILI NUOVA SEZIONE STUDI SCIENTIFICI ====== */
-/* ================================================== */
+/* --- Stili Sezione Studi Scientifici --- */
 .studies-grid {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
@@ -348,10 +346,7 @@ strong {
     margin-left: 5px;
 }
 
-
-/* ================================================== */
-/* ========= NUOVI STILI APP SHOWCASE MOBILE ========== */
-/* ================================================== */
+/* --- Sezione App Showcase --- */
 .app-showcase-container {
     position: relative;
     width: 100%;
@@ -385,7 +380,7 @@ strong {
 .section.visible .screen-4 { transform: translateX(160%) rotate(8deg); }
 
 
-/* --- SEZIONE TESTIMONIANZE CON SLIDER --- */
+/* --- Sezione Testimonianze con Slider --- */
 .testimonial-card-slider {
     display: flex;
     flex-direction: column;
@@ -468,7 +463,7 @@ strong {
     aspect-ratio: 1 / 1;
 }
 
-/* --- SEZIONE SOCIAL MODEL --- */
+/* --- Sezione Social Model --- */
 .social-model-content {
     max-width: 700px;
     margin: 0 auto;
@@ -480,7 +475,7 @@ strong {
     margin-bottom: 20px;
 }
 
-/* --- SEZIONE FAQ --- */
+/* --- Sezione FAQ --- */
 .faq-container {
     text-align: left;
 }
@@ -504,7 +499,7 @@ strong {
     align-items: center;
 }
 .faq-item h4::after {
-    content: '\f078'; /* Font Awesome down arrow */
+    content: '\f078';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     transition: transform 0.4s ease;
@@ -520,11 +515,11 @@ strong {
     padding: 0 20px;
 }
 .faq-item.active p {
-    max-height: 200px; /* Altezza sufficiente a contenere la risposta */
+    max-height: 200px;
     padding: 0 20px 20px;
 }
 
-/* --- SEZIONE CONTATTI --- */
+/* --- Sezione Contatti --- */
 .contact-info .contact-email {
     font-size: 1.3rem;
     font-weight: 600;
@@ -703,21 +698,23 @@ strong {
     .footer-content, .footer-bottom { text-align: center; }
     .social-icons { justify-content: center; }
 
-    /* MODIFICA VISUALIZZAZIONE SCREENSHOT SU MOBILE */
+    /* ========================================================== */
+    /* == NUOVA VISUALIZZAZIONE SCREENSHOT SU MOBILE (COERENTE) === */
+    /* ========================================================== */
     .app-showcase-container { height: 450px; }
-    .showcase-screen { height: 320px; }
+    .showcase-screen { height: 320px; transform-origin: bottom center; }
 
-    /* Stato iniziale per mobile: una pila più compatta */
-    .screen-1 { transform: rotate(-3deg) translate(-5px, 0); }
-    .screen-2 { transform: rotate(2deg) translate(5px, 0); }
-    .screen-3 { transform: rotate(5deg) translate(0, 5px); }
-    .screen-4 { transform: rotate(-1deg) translate(0, -5px); }
+    /* Stato iniziale per mobile: una pila ordinata al centro */
+    .screen-1 { transform: rotate(0deg) scale(0.9); z-index: 4; }
+    .screen-2 { transform: rotate(0deg) scale(0.85); z-index: 3; }
+    .screen-3 { transform: rotate(0deg) scale(0.8); z-index: 2; }
+    .screen-4 { transform: rotate(0deg) scale(0.75); z-index: 1; }
 
-    /* Stato finale per mobile: si espandono leggermente in modo coerente */
-    .section.visible .screen-1 { transform: translate(-35px, -30px) rotate(-8deg) scale(0.95); }
-    .section.visible .screen-2 { transform: translate(35px, -30px) rotate(8deg) scale(0.95); }
-    .section.visible .screen-3 { transform: translate(-35px, 30px) rotate(8deg) scale(0.95); }
-    .section.visible .screen-4 { transform: translate(35px, 30px) rotate(-8deg) scale(0.95); }
+    /* Stato finale per mobile: si espandono a ventaglio in modo coerente con il desktop */
+    .section.visible .screen-1 { transform: translateX(-60%) rotate(-8deg) scale(0.9); }
+    .section.visible .screen-2 { transform: translateX(-20%) rotate(-4deg) scale(0.9); }
+    .section.visible .screen-3 { transform: translateX(20%) rotate(4deg) scale(0.9); }
+    .section.visible .screen-4 { transform: translateX(60%) rotate(8deg) scale(0.9); }
 }
 
 @media (max-width: 480px) {
@@ -725,12 +722,11 @@ strong {
     .showcase-screen { height: 280px; }
 
     /* Riduce ulteriormente l'espansione su schermi molto piccoli */
-    .section.visible .screen-1 { transform: translate(-25px, -20px) rotate(-6deg) scale(0.9); }
-    .section.visible .screen-2 { transform: translate(25px, -20px) rotate(6deg) scale(0.9); }
-    .section.visible .screen-3 { transform: translate(-25px, 20px) rotate(6deg) scale(0.9); }
-    .section.visible .screen-4 { transform: translate(25px, 20px) rotate(-6deg) scale(0.9); }
+    .section.visible .screen-1 { transform: translateX(-55%) rotate(-8deg) scale(0.85); }
+    .section.visible .screen-2 { transform: translateX(-18%) rotate(-4deg) scale(0.85); }
+    .section.visible .screen-3 { transform: translateX(18%) rotate(4deg) scale(0.85); }
+    .section.visible .screen-4 { transform: translateX(55%) rotate(8deg) scale(0.85); }
 }
-
 
 /* --- Indicatore di Scorrimento Animato --- */
 .scroll-down-indicator {
