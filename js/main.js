@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Forza il browser a non ripristinare la posizione di scorrimento precedente
-    // Questa è la soluzione più robusta per garantire che la pagina torni in cima al refresh.
     if (history.scrollRestoration) {
         history.scrollRestoration = 'manual';
     }
@@ -54,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
         rootMargin: '0px 0px -50px 0px'
     });
 
-    // L'observer si applica a tutte le sezioni, inclusa la nuova sezione "studies"
     document.querySelectorAll('.section').forEach(section => {
         observer.observe(section);
     });
