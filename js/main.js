@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Forza il browser a non ripristinare la posizione di scorrimento precedente
+    if (history.scrollRestoration) {
+        history.scrollRestoration = 'manual';
+    }
     // Riporta la pagina all'inizio al caricamento
     window.scrollTo(0, 0);
 

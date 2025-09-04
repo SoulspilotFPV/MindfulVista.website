@@ -300,44 +300,39 @@ strong {
     margin-bottom: 20px;
 }
 
-/* --- SEZIONE APP PREVIEW STACK --- */
-.app-preview-stack {
+/* --- NUOVA SEZIONE APP SHOWCASE --- */
+.app-showcase-container {
     position: relative;
     width: 100%;
-    max-width: 280px;
-    height: 550px;
-    margin: 50px auto 0;
+    height: 550px; /* Altezza per contenere gli screenshot */
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.app-preview-item {
+.showcase-screen {
     position: absolute;
-    width: 100%;
-    height: auto;
-    top: 0;
-    left: 0;
-    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.app-preview-item img {
-    width: 100%;
+    height: 480px;
+    width: auto;
     border-radius: 25px;
     box-shadow: var(--shadow-lg);
-    user-select: none;
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform-origin: center center;
 }
 
-#screen_1 { transform: rotate(8deg); z-index: 4; }
-#screen_2 { transform: rotate(-5deg); z-index: 3; }
-#screen_3 { transform: rotate(5deg); z-index: 2; }
-#screen_4 { transform: rotate(-8deg); z-index: 1; }
+/* Stato iniziale "casuale" e sovrapposto */
+.screen-1 { transform: rotate(-5deg) translate(-20px, 0); z-index: 4; }
+.screen-2 { transform: rotate(3deg) translate(20px, 10px); z-index: 3; }
+.screen-3 { transform: rotate(8deg) translate(-10px, 5px); z-index: 2; }
+.screen-4 { transform: rotate(-3deg) translate(10px, -10px); z-index: 1; }
 
-.app-preview-stack:hover #screen_1 { transform: translateY(0) rotate(0) scale(1.02); }
-.app-preview-stack:hover #screen_2 { transform: translateY(110%) rotate(0) scale(1.02); }
-.app-preview-stack:hover #screen_3 { transform: translateY(220%) rotate(0) scale(1.02); }
-.app-preview-stack:hover #screen_4 { transform: translateY(330%) rotate(0) scale(1.02); }
+/* Stato finale "espanso" quando la sezione è visibile */
+.section.visible .screen-1 { transform: translateX(-160%) rotate(-8deg); }
+.section.visible .screen-2 { transform: translateX(-55%) rotate(-3deg); }
+.section.visible .screen-3 { transform: translateX(55%) rotate(3deg); }
+.section.visible .screen-4 { transform: translateX(160%) rotate(8deg); }
 
-#app-preview {
-    padding-bottom: 300px;
-}
 
 /* --- SEZIONE TESTIMONIANZE CON SLIDER --- */
 .testimonial-card-slider {
@@ -613,19 +608,6 @@ strong {
     margin-right: auto;
 }
 
-/* --- Animazioni Hamburger --- */
-@keyframes converge-rotate-top {
-    0% { transform: translateY(0) rotate(0); }
-    50% { transform: translateY(8px) rotate(0); }
-    100% { transform: translateY(8px) rotate(45deg); }
-}
-
-@keyframes converge-rotate-bottom {
-    0% { transform: translateY(0) rotate(0); }
-    50% { transform: translateY(-8px) rotate(0); }
-    100% { transform: translateY(-8px) rotate(-45deg); }
-}
-
 /* --- Menu Mobile --- */
 .mobile-menu { display: none; z-index: 9999; }
 .menu-btn {
@@ -645,21 +627,15 @@ strong {
     border-radius: 3px;
     transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.3s ease;
 }
-
-.menu-btn.active span {
-    transition: none; /* Disattiva la transizione di ritorno per usare l'animazione */
-}
-
 .menu-btn.active span:nth-child(1) {
-    animation: converge-rotate-top 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    transform: translateY(8px) rotate(45deg);
 }
 .menu-btn.active span:nth-child(2) {
     opacity: 0;
 }
 .menu-btn.active span:nth-child(3) {
-    animation: converge-rotate-bottom 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    transform: translateY(-8px) rotate(-45deg);
 }
-
 .mobile-nav-links {
     position: fixed;
     top: 70px;
@@ -680,6 +656,14 @@ strong {
 .mobile-nav-links .nav-link { font-size: 1.5rem; color: var(--text-primary); }
 
 /* --- Media Queries --- */
+@media (max-width: 1200px) {
+    /* Adatta la visuale espansa per schermi più piccoli */
+    .section.visible .screen-1 { transform: translateX(-120%) rotate(-8deg); }
+    .section.visible .screen-2 { transform: translateX(-40%) rotate(-3deg); }
+    .section.visible .screen-3 { transform: translateX(40%) rotate(3deg); }
+    .section.visible .screen-4 { transform: translateX(120%) rotate(8deg); }
+}
+
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .mobile-menu { display: block; }
@@ -691,12 +675,18 @@ strong {
     .about-image { grid-row: 1; }
     .footer-content, .footer-bottom { text-align: center; }
     .social-icons { justify-content: center; }
-    .app-preview-stack { height: 450px; }
-    #app-preview { padding-bottom: 250px; }
+    .app-showcase-container { height: 450px; }
+    .showcase-screen { height: 320px; }
+    .section.visible .showcase-screen { transform: translateX(0) rotate(0) scale(0.8); }
+    .section.visible .screen-1 { transform: translateY(-80%) scale(0.7); }
+    .section.visible .screen-2 { transform: translateY(-25%) scale(0.7); }
+    .section.visible .screen-3 { transform: translateY(25%) scale(0.7); }
+    .section.visible .screen-4 { transform: translateY(80%) scale(0.7); }
 }
 
 @media (max-width: 480px) {
-    .app-preview-stack { max-width: 240px; }
+    .app-showcase-container { height: 400px; }
+    .showcase-screen { height: 280px; }
 }
 
 /* --- Indicatore di Scorrimento Animato --- */
