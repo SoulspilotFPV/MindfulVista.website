@@ -288,9 +288,7 @@ strong {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-/* ================================================== */
-/* ========= STILI NUOVA SEZIONE STUDI SCIENTIFICI ====== */
-/* ================================================== */
+/* --- SEZIONE STUDI SCIENTIFICI --- */
 .studies-grid {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
@@ -348,10 +346,7 @@ strong {
     margin-left: 5px;
 }
 
-
-/* ================================================== */
-/* ========= STILI APP SHOWCASE (DESKTOP) ============== */
-/* ================================================== */
+/* --- SEZIONE APP SHOWCASE --- */
 .app-showcase-container {
     position: relative;
     width: 100%;
@@ -372,13 +367,13 @@ strong {
     transform-origin: center center;
 }
 
-/* Stato iniziale "casuale" e sovrapposto per DESKTOP */
+/* Stato iniziale "casuale" e sovrapposto */
 .screen-1 { transform: rotate(-5deg) translate(-20px, 0); z-index: 4; }
 .screen-2 { transform: rotate(3deg) translate(20px, 10px); z-index: 3; }
 .screen-3 { transform: rotate(8deg) translate(-10px, 5px); z-index: 2; }
 .screen-4 { transform: rotate(-3deg) translate(10px, -10px); z-index: 1; }
 
-/* Stato finale "espanso" quando la sezione è visibile per DESKTOP */
+/* Stato finale "espanso" quando la sezione è visibile */
 .section.visible .screen-1 { transform: translateX(-160%) rotate(-8deg); }
 .section.visible .screen-2 { transform: translateX(-55%) rotate(-3deg); }
 .section.visible .screen-3 { transform: translateX(55%) rotate(3deg); }
@@ -467,6 +462,32 @@ strong {
     object-fit: cover;
     aspect-ratio: 1 / 1;
 }
+
+/* --- SEZIONE PARTNER REINSERITA --- */
+.partners-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+.partner-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: var(--text-light);
+}
+.partner-item i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--primary);
+}
+.partner-item span {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
 
 /* --- SEZIONE SOCIAL MODEL --- */
 .social-model-content {
@@ -704,32 +725,45 @@ strong {
     .social-icons { justify-content: center; }
 
     /* ================================================== */
-    /* == NUOVA VISUALIZZAZIONE SCREENSHOT GRIGLIA 2x2 MOBILE == */
+    /* ===== NUOVA VISUALIZZAZIONE SCREENSHOT MOBILE 2x2 ==== */
     /* ================================================== */
     .app-showcase-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* Crea 2 colonne di uguale larghezza */
-        gap: 20px;                      /* Spazio tra gli screenshot */
-        height: auto;                   /* L'altezza si adatta al contenuto */
-        position: static;               /* Rimuove il posizionamento per la sovrapposizione */
-        margin-top: 0;
+        height: 650px; /* Aumenta l'altezza per la griglia 2x2 */
     }
-
     .showcase-screen {
-        position: static;   /* Ogni screen occupa la sua cella nella griglia */
-        width: 100%;        /* Larghezza al 100% della colonna */
-        height: auto;       /* Altezza automatica per mantenere le proporzioni */
-        transform: none !important; /* Rimuove ogni trasformazione (rotazione, traslazione) */
-        z-index: auto;
-        transition: none;   /* Disattiva l'animazione */
+        height: 280px; /* Adatta l'altezza degli screen */
+        width: auto;
     }
 
-    /* Assicura che non ci sia animazione di espansione */
-    .section.visible .showcase-screen {
-        transform: none !important;
+    /* Stato iniziale per mobile: una pila più compatta e centrata */
+    .screen-1, .screen-2, .screen-3, .screen-4 {
+        transform: rotate(0deg) translate(0, 0) scale(0.9);
     }
+    .screen-1 { z-index: 4; }
+    .screen-2 { z-index: 3; }
+    .screen-3 { z-index: 2; }
+    .screen-4 { z-index: 1; }
+
+    /* Stato finale per mobile: griglia 2x2 animata */
+    .section.visible .screen-1 { transform: translate(-55%, -55%) rotate(-4deg) scale(1); }
+    .section.visible .screen-2 { transform: translate(55%, -55%) rotate(4deg) scale(1); }
+    .section.visible .screen-3 { transform: translate(-55%, 55%) rotate(4deg) scale(1); }
+    .section.visible .screen-4 { transform: translate(55%, 55%) rotate(-4deg) scale(1); }
 }
 
+@media (max-width: 480px) {
+    .app-showcase-container {
+        height: 550px;
+    }
+    .showcase-screen {
+        height: 230px;
+    }
+    /* Adatta la traslazione per schermi più piccoli per evitare sovrapposizioni */
+    .section.visible .screen-1 { transform: translate(-52%, -52%) rotate(-4deg) scale(1); }
+    .section.visible .screen-2 { transform: translate(52%, -52%) rotate(4deg) scale(1); }
+    .section.visible .screen-3 { transform: translate(-52%, 52%) rotate(4deg) scale(1); }
+    .section.visible .screen-4 { transform: translate(52%, 52%) rotate(-4deg) scale(1); }
+}
 
 /* --- Indicatore di Scorrimento Animato --- */
 .scroll-down-indicator {
