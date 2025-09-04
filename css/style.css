@@ -346,17 +346,12 @@ strong {
     margin-left: 5px;
 }
 
-/* ==================================================
-SEZIONE APP SHOWCASE
-==================================================
-*/
-/* ================================================ *
- * >> FIX <<
- * Aggiunto overflow-x: hidden per impedire
- * lo scorrimento orizzontale su mobile causato
- * dalle animazioni degli screenshot.
- * ================================================ */
+/* --- SEZIONE APP SHOWCASE --- */
 #app-preview {
+    /* ================================================== */
+    /* ========= FIX SCORRIMENTO ORIZZONTALE MOBILE ======== */
+    /* ================================================== */
+    /* Questa regola impedisce che l'animazione degli screen causi una barra di scorrimento orizzontale su mobile */
     overflow-x: hidden;
 }
 
@@ -476,7 +471,7 @@ SEZIONE APP SHOWCASE
     aspect-ratio: 1 / 1;
 }
 
-/* --- SEZIONE PARTNER REINSERITA --- */
+/* --- SEZIONE PARTNER --- */
 .partners-logos {
     display: flex;
     justify-content: center;
@@ -737,14 +732,17 @@ SEZIONE APP SHOWCASE
     .footer-content, .footer-bottom { text-align: center; }
     .social-icons { justify-content: center; }
 
+    /* ================================================== */
+    /* ===== NUOVA VISUALIZZAZIONE SCREENSHOT MOBILE 2x2 ==== */
+    /* ================================================== */
     .app-showcase-container {
-        height: 650px;
+        height: 650px; /* Aumenta l'altezza per la griglia 2x2 */
     }
     .showcase-screen {
-        height: 280px;
-        width: auto;
+        height: 280px; /* Adatta l'altezza degli screen */
     }
 
+    /* Stato iniziale per mobile: una pila più compatta e centrata */
     .screen-1, .screen-2, .screen-3, .screen-4 {
         transform: rotate(0deg) translate(0, 0) scale(0.9);
     }
@@ -753,6 +751,7 @@ SEZIONE APP SHOWCASE
     .screen-3 { z-index: 2; }
     .screen-4 { z-index: 1; }
 
+    /* Stato finale per mobile: griglia 2x2 animata */
     .section.visible .screen-1 { transform: translate(-55%, -55%) rotate(-4deg) scale(1); }
     .section.visible .screen-2 { transform: translate(55%, -55%) rotate(4deg) scale(1); }
     .section.visible .screen-3 { transform: translate(-55%, 55%) rotate(4deg) scale(1); }
@@ -766,6 +765,7 @@ SEZIONE APP SHOWCASE
     .showcase-screen {
         height: 230px;
     }
+    /* Adatta la traslazione per schermi più piccoli per evitare sovrapposizioni */
     .section.visible .screen-1 { transform: translate(-52%, -52%) rotate(-4deg) scale(1); }
     .section.visible .screen-2 { transform: translate(52%, -52%) rotate(4deg) scale(1); }
     .section.visible .screen-3 { transform: translate(-52%, 52%) rotate(4deg) scale(1); }
