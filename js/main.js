@@ -6,9 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const faqItems = document.querySelectorAll('.faq-item');
 
     // Riporta la pagina all'inizio al refresh
-    window.onbeforeunload = function () {
+    // Questo è il modo più affidabile per farlo su tutti i browser
+    if (history.scrollRestoration) {
+        history.scrollRestoration = 'manual';
+    }
+    window.addEventListener('beforeunload', () => {
         window.scrollTo(0, 0);
-    };
+    });
+    // Fornisce un fallback per browser meno recenti o in casi specifici
+    window.scrollTo(0, 0);
+
 
     // Toggle del menu mobile
     menuBtn.addEventListener('click', function() {
@@ -27,7 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                    // Calcola la posizione di scorrimento tenendo conto dell'altezza della navbar fissa
+                    const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 80; // 80px è l'altezza approssimativa della navbar
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
                 }
             }
 

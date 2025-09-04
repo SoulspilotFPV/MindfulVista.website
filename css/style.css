@@ -300,10 +300,10 @@ strong {
     margin-bottom: 20px;
 }
 
-/* --- SEZIONE APP PREVIEW SLIDER --- */
+/* --- SEZIONE APP PREVIEW SLIDER (Corretto per loop continuo) --- */
 @keyframes app-scroll {
     from { transform: translateX(0); }
-    to { transform: translateX(calc(-280px * 4)); }
+    to { transform: translateX(calc(-280px * 4)); } /* Spostamento per 4 slide (originali) */
 }
 
 .app-slider {
@@ -313,18 +313,19 @@ strong {
     position: relative;
     width: 100%;
 }
-.app-slider::before, .app-slider::after { display: none; }
+.app-slider::before, .app-slider::after { display: none; } /* Rimuove i gradienti se non necessari */
+
 .app-slide-track {
-    animation: app-scroll 30s linear infinite;
+    animation: app-scroll 30s linear infinite; /* Rallentato a 30s per maggiore morbidezza */
     display: flex;
-    width: calc(280px * 8);
+    width: calc(280px * 8); /* Doppio delle slide per il loop (4 originali + 4 clonate) */
 }
 .app-slider:hover .app-slide-track {
     animation-play-state: paused;
 }
 .app-slide {
     height: 500px;
-    width: 280px;
+    min-width: 280px; /* Usa min-width per layout responsive */
     padding: 0 15px;
 }
 .app-slide img {
@@ -333,6 +334,7 @@ strong {
     border-radius: 25px;
     box-shadow: var(--shadow-lg);
     user-select: none;
+    display: block; /* Evita spazi indesiderati */
 }
 
 
@@ -367,7 +369,7 @@ strong {
 
 @keyframes scroll {
     from { transform: translateX(0); }
-    to { transform: translateX(calc(-350px * 7)); }
+    to { transform: translateX(calc(-350px * 7)); } /* Spostamento per 7 slide (originali) */
 }
 
 .slider {
@@ -378,19 +380,19 @@ strong {
     width: 100%;
 }
 
-.slider::before, .slider::after { display: none; }
+.slider::before, .slider::after { display: none; } /* Rimuove i gradienti se non necessari */
 
 .slide-track {
     animation: scroll 40s linear infinite;
     display: flex;
-    width: calc(350px * 14);
+    width: calc(350px * 14); /* Doppio delle slide per il loop (7 originali + 7 clonate) */
 }
 
 .slider:hover .slide-track { animation-play-state: paused; }
 
 .slide {
     height: 280px;
-    width: 350px;
+    min-width: 350px; /* Usa min-width per layout responsive */
     padding: 15px;
 }
 .slide .testimonial-card-slider { height: 100%; }
@@ -617,6 +619,7 @@ strong {
     cursor: pointer;
     background: none;
     border: none;
+    transition: all 0.5s ease; /* Transizione più lenta per il bottone */
 }
 .menu-btn span {
     display: block;
@@ -624,7 +627,7 @@ strong {
     height: 3px;
     background: var(--primary-dark);
     margin: 5px 0;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease; /* Transizione più lenta per le barre */
     border-radius: 3px;
 }
 .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
@@ -644,7 +647,7 @@ strong {
     justify-content: center;
     gap: 25px;
     z-index: 9998;
-    transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: right 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transizione più lenta per il menu */
 }
 .mobile-nav-links.active { right: 0; }
 .mobile-nav-links .nav-link { font-size: 1.5rem; color: var(--text-primary); }
