@@ -288,7 +288,9 @@ strong {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-/* --- Stili Sezione Studi Scientifici --- */
+/* ================================================== */
+/* ========= STILI NUOVA SEZIONE STUDI SCIENTIFICI ====== */
+/* ================================================== */
 .studies-grid {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
@@ -346,7 +348,10 @@ strong {
     margin-left: 5px;
 }
 
-/* --- Sezione App Showcase --- */
+
+/* ================================================== */
+/* ========= STILI APP SHOWCASE (DESKTOP) ============== */
+/* ================================================== */
 .app-showcase-container {
     position: relative;
     width: 100%;
@@ -367,20 +372,20 @@ strong {
     transform-origin: center center;
 }
 
-/* Stato iniziale "casuale" e sovrapposto */
+/* Stato iniziale "casuale" e sovrapposto per DESKTOP */
 .screen-1 { transform: rotate(-5deg) translate(-20px, 0); z-index: 4; }
 .screen-2 { transform: rotate(3deg) translate(20px, 10px); z-index: 3; }
 .screen-3 { transform: rotate(8deg) translate(-10px, 5px); z-index: 2; }
 .screen-4 { transform: rotate(-3deg) translate(10px, -10px); z-index: 1; }
 
-/* Stato finale "espanso" quando la sezione è visibile */
+/* Stato finale "espanso" quando la sezione è visibile per DESKTOP */
 .section.visible .screen-1 { transform: translateX(-160%) rotate(-8deg); }
 .section.visible .screen-2 { transform: translateX(-55%) rotate(-3deg); }
 .section.visible .screen-3 { transform: translateX(55%) rotate(3deg); }
 .section.visible .screen-4 { transform: translateX(160%) rotate(8deg); }
 
 
-/* --- Sezione Testimonianze con Slider --- */
+/* --- SEZIONE TESTIMONIANZE CON SLIDER --- */
 .testimonial-card-slider {
     display: flex;
     flex-direction: column;
@@ -463,7 +468,7 @@ strong {
     aspect-ratio: 1 / 1;
 }
 
-/* --- Sezione Social Model --- */
+/* --- SEZIONE SOCIAL MODEL --- */
 .social-model-content {
     max-width: 700px;
     margin: 0 auto;
@@ -475,7 +480,7 @@ strong {
     margin-bottom: 20px;
 }
 
-/* --- Sezione FAQ --- */
+/* --- SEZIONE FAQ --- */
 .faq-container {
     text-align: left;
 }
@@ -499,7 +504,7 @@ strong {
     align-items: center;
 }
 .faq-item h4::after {
-    content: '\f078';
+    content: '\f078'; /* Font Awesome down arrow */
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     transition: transform 0.4s ease;
@@ -515,11 +520,11 @@ strong {
     padding: 0 20px;
 }
 .faq-item.active p {
-    max-height: 200px;
+    max-height: 200px; /* Altezza sufficiente a contenere la risposta */
     padding: 0 20px 20px;
 }
 
-/* --- Sezione Contatti --- */
+/* --- SEZIONE CONTATTI --- */
 .contact-info .contact-email {
     font-size: 1.3rem;
     font-weight: 600;
@@ -698,35 +703,33 @@ strong {
     .footer-content, .footer-bottom { text-align: center; }
     .social-icons { justify-content: center; }
 
-    /* ========================================================== */
-    /* == NUOVA VISUALIZZAZIONE SCREENSHOT SU MOBILE (COERENTE) === */
-    /* ========================================================== */
-    .app-showcase-container { height: 450px; }
-    .showcase-screen { height: 320px; transform-origin: bottom center; }
+    /* ================================================== */
+    /* == NUOVA VISUALIZZAZIONE SCREENSHOT GRIGLIA 2x2 MOBILE == */
+    /* ================================================== */
+    .app-showcase-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Crea 2 colonne di uguale larghezza */
+        gap: 20px;                      /* Spazio tra gli screenshot */
+        height: auto;                   /* L'altezza si adatta al contenuto */
+        position: static;               /* Rimuove il posizionamento per la sovrapposizione */
+        margin-top: 0;
+    }
 
-    /* Stato iniziale per mobile: una pila ordinata al centro */
-    .screen-1 { transform: rotate(0deg) scale(0.9); z-index: 4; }
-    .screen-2 { transform: rotate(0deg) scale(0.85); z-index: 3; }
-    .screen-3 { transform: rotate(0deg) scale(0.8); z-index: 2; }
-    .screen-4 { transform: rotate(0deg) scale(0.75); z-index: 1; }
+    .showcase-screen {
+        position: static;   /* Ogni screen occupa la sua cella nella griglia */
+        width: 100%;        /* Larghezza al 100% della colonna */
+        height: auto;       /* Altezza automatica per mantenere le proporzioni */
+        transform: none !important; /* Rimuove ogni trasformazione (rotazione, traslazione) */
+        z-index: auto;
+        transition: none;   /* Disattiva l'animazione */
+    }
 
-    /* Stato finale per mobile: si espandono a ventaglio in modo coerente con il desktop */
-    .section.visible .screen-1 { transform: translateX(-60%) rotate(-8deg) scale(0.9); }
-    .section.visible .screen-2 { transform: translateX(-20%) rotate(-4deg) scale(0.9); }
-    .section.visible .screen-3 { transform: translateX(20%) rotate(4deg) scale(0.9); }
-    .section.visible .screen-4 { transform: translateX(60%) rotate(8deg) scale(0.9); }
+    /* Assicura che non ci sia animazione di espansione */
+    .section.visible .showcase-screen {
+        transform: none !important;
+    }
 }
 
-@media (max-width: 480px) {
-    .app-showcase-container { height: 400px; }
-    .showcase-screen { height: 280px; }
-
-    /* Riduce ulteriormente l'espansione su schermi molto piccoli */
-    .section.visible .screen-1 { transform: translateX(-55%) rotate(-8deg) scale(0.85); }
-    .section.visible .screen-2 { transform: translateX(-18%) rotate(-4deg) scale(0.85); }
-    .section.visible .screen-3 { transform: translateX(18%) rotate(4deg) scale(0.85); }
-    .section.visible .screen-4 { transform: translateX(55%) rotate(8deg) scale(0.85); }
-}
 
 /* --- Indicatore di Scorrimento Animato --- */
 .scroll-down-indicator {
